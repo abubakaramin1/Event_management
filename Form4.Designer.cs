@@ -35,12 +35,12 @@
             label4 = new Label();
             label5 = new Label();
             textBox1 = new TextBox();
-            textBox2 = new TextBox();
             textBox3 = new TextBox();
             textBox4 = new TextBox();
             button1 = new Button();
             label6 = new Label();
-            textBox5 = new TextBox();
+            venueBox = new ComboBox();
+            comboBox2 = new ComboBox();
             SuspendLayout();
             // 
             // label1
@@ -102,13 +102,6 @@
             textBox1.Size = new Size(200, 23);
             textBox1.TabIndex = 6;
             // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(324, 170);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(200, 23);
-            textBox2.TabIndex = 7;
-            // 
             // textBox3
             // 
             textBox3.Location = new Point(324, 223);
@@ -142,24 +135,33 @@
             label6.TabIndex = 11;
             label6.Text = "Owner";
             // 
-            // textBox5
+            // venueBox
             // 
-            textBox5.Location = new Point(324, 336);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(200, 23);
-            textBox5.TabIndex = 12;
+            venueBox.FormattingEnabled = true;
+            venueBox.Location = new Point(324, 170);
+            venueBox.Name = "venueBox";
+            venueBox.Size = new Size(200, 23);
+            venueBox.TabIndex = 13;
+            // 
+            // comboBox2
+            // 
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new Point(324, 339);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(200, 23);
+            comboBox2.TabIndex = 14;
             // 
             // Form4
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(textBox5);
+            Controls.Add(comboBox2);
+            Controls.Add(venueBox);
             Controls.Add(label6);
             Controls.Add(button1);
             Controls.Add(textBox4);
             Controls.Add(textBox3);
-            Controls.Add(textBox2);
             Controls.Add(textBox1);
             Controls.Add(label5);
             Controls.Add(label4);
@@ -169,6 +171,7 @@
             Controls.Add(label1);
             Name = "Form4";
             Text = "Form4";
+            Load += Form4_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -182,11 +185,11 @@
         private Label label4;
         private Label label5;
         private TextBox textBox1;
-        private TextBox textBox2;
         private TextBox textBox3;
         private TextBox textBox4;
         private Button button1;
         private Label label6;
-        private TextBox textBox5;
+        private ComboBox venueBox;
+        private ComboBox comboBox2;
     }
 }

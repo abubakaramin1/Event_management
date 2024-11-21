@@ -42,6 +42,7 @@
             textBox4 = new TextBox();
             label7 = new Label();
             textBox5 = new TextBox();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
@@ -71,6 +72,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(159, 23);
             textBox1.TabIndex = 2;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // label2
             // 
@@ -162,11 +164,21 @@
             textBox5.Size = new Size(166, 23);
             textBox5.TabIndex = 13;
             // 
+            // button1
+            // 
+            button1.Location = new Point(236, 67);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 14;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            // 
             // Form5
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button1);
             Controls.Add(textBox5);
             Controls.Add(label7);
             Controls.Add(textBox4);
@@ -183,6 +195,8 @@
             Controls.Add(dataGridView1);
             Name = "Form5";
             Text = "Form5";
+            WindowState = FormWindowState.Maximized;
+            Load += Form5_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             ResumeLayout(false);
@@ -205,5 +219,6 @@
         private TextBox textBox4;
         private Label label7;
         private TextBox textBox5;
+        private Button button1;
     }
 }

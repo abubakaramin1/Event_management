@@ -27,14 +27,14 @@ namespace Event_management
             {
                 string query = "select * from Resources where ResourceID in(" +
                                "select ResourceID from Event_Resources where EventID = @EventID)";
-                string attendeeQuery = "select * from Attendees where AttendeeID in( " +
+                string attendeeQuery = "select * from UserLoginInfo where Id in( " +
                     "select AttendeeID from Event_Attendees where EventID in (@EventID))";
-                string estimatedQuery = "select EstimatedBudget from Budget where EventID in (@EventID)";
+                string estimatedQuery = "select Budget from Events where EventID in (@EventID)";
                 string actualQuery = "select ActualCost from Budget where EventID in (@EventID)";
-                string organizerQuery = "select OrganizerName from Organizers where OrganizerID in ( select OrganizerID from Events where EventID in (@EventID))";
+                string organizerQuery = "select FullName from UserLoginInfo where Id in ( select OrganizerID from Events where EventID in (@EventID))";
                 string dateQuery = "\r\nselect eventDate from Events where EventID in (@EventID)";
                 string venueQuery = "SELECT VenueName FROM Venues WHERE VenueID = (SELECT VenueID FROM Events WHERE EventID = @EventID)";
-                string connectionString = "Server=DESKTOP-ECBNEFI;Database=event_management;User Id=abubakar111;Password=abubakar111;";
+                string connectionString = "Data Source=(local);Initial Catalog=event_management;Integrated Security=True;TrustServerCertificate=True";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -91,7 +91,7 @@ namespace Event_management
                     }
                     else
                     {
-                        textBox2.Text = "Venue: Not Available";
+                        textBox2.Text = "Venue : Not Available";
                     }
                 }
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -154,8 +154,16 @@ namespace Event_management
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }   
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
-        
+        private void Form5_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

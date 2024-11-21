@@ -12,6 +12,7 @@ namespace Event_management
 {
     public partial class Form3 : Form
     {
+        DataSet ds;
         public Form3()
         {
             InitializeComponent();
@@ -19,31 +20,35 @@ namespace Event_management
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            Class1 class1 = new Class1();
-            dataGridView1.DataSource = class1.ConnectToDatabase().Tables[0];
+            populateeventlisting();
+           
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        public void populateeventlisting()
         {
-            Form4 form = new Form4();
-            form.Show();
-            this.Hide();
-            form.FormClosed += (s, args) => this.Close();
+            Class1 class1 = new Class1();
+            ds = class1.ConnectToDatabase();
+            dataGridView1.DataSource = ds.Tables[0];
+            dataGridView1.Columns["EventID"].Visible = false;
         }
+        
+
+
+
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 int eventId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["EventID"].Value);
-               
+
 
                 Form5 form5 = new Form5(eventId);
+                form5.MdiParent = this.MdiParent;
                 form5.Show();
-                this.Hide();
-                form5.FormClosed += (s, args) => this.Close();
             }
         }
+
+      
     }
 }
