@@ -16,7 +16,6 @@ namespace Event_management
 
     public partial class Form4 : Form
     {
-        string connectionString;
         Form3 Listingformobj;
         private long userId;
 
@@ -33,9 +32,8 @@ namespace Event_management
 
         private void Form4_Load(object sender, EventArgs e)
         {
-            connectionString = "Data Source=(local);Initial Catalog=event_management;Integrated Security=True;TrustServerCertificate=True";
             string query = "SELECT * FROM Venues";
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
             {
                 try
                 {
@@ -109,7 +107,7 @@ namespace Event_management
             string query = "INSERT INTO Events (EventName, EventDate, VenueID, OrganizerID, Budget, Description, OwnerID) " +
                    "VALUES (@EventName, @EventDate, @VenueID,@OrganizerID, @Budget, @Description, @OwnerID)";
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -162,7 +160,6 @@ namespace Event_management
         public int Id { get; set; }
         public string Text { get; set; }
 
-        // Override ToString to show the text in the ComboBox
         public override string ToString()
         {
             return Text;

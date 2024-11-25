@@ -1,6 +1,6 @@
 ﻿namespace Event_management
 {
-    partial class Form3
+    partial class Frm_ResourcesAdd
     {
         /// <summary>
         /// Required designer variable.
@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
+            Required = new DataGridViewTextBoxColumn();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -36,31 +38,47 @@
             // 
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Required });
             dataGridView1.Location = new Point(0, 0);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(800, 450);
-            dataGridView1.TabIndex = 1;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.Size = new Size(800, 255);
+            dataGridView1.TabIndex = 0;
             // 
-            // Form3
+            // Required
+            // 
+            Required.DataPropertyName = "bigint";
+            Required.HeaderText = "Required Amount";
+            Required.Name = "Required";
+            // 
+            // button1
+            // 
+            button1.Location = new Point(673, 354);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 1;
+            button1.Text = "Confirm";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // Frm_ResourcesAdd
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            ControlBox = false;
+            Controls.Add(button1);
             Controls.Add(dataGridView1);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "Form3";
-            Text = "Form3";
-            WindowState = FormWindowState.Maximized;
-            Load += Form3_Load;
+            Name = "Frm_ResourcesAdd";
+            Text = "Frm_ResourcesAdd";
+            FormClosed += Frm_ResourcesAdd_FormClosed;
+            Load += Frm_ResourcesAdd_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
+
         private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn Required;
+        private Button button1;
     }
 }

@@ -52,7 +52,7 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(71, 96);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(240, 150);
+            dataGridView1.Size = new Size(306, 150);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellDoubleClick += dataGridView1_CellContentClick;
@@ -77,7 +77,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(151, 66);
+            label2.Location = new Point(182, 66);
             label2.Name = "label2";
             label2.Size = new Size(60, 15);
             label2.TabIndex = 3;
@@ -86,15 +86,15 @@
             // dataGridView2
             // 
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(414, 96);
+            dataGridView2.Location = new Point(438, 96);
             dataGridView2.Name = "dataGridView2";
-            dataGridView2.Size = new Size(240, 150);
+            dataGridView2.Size = new Size(303, 150);
             dataGridView2.TabIndex = 4;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(501, 66);
+            label3.Location = new Point(551, 66);
             label3.Name = "label3";
             label3.Size = new Size(60, 15);
             label3.TabIndex = 5;
@@ -166,12 +166,13 @@
             // 
             // button1
             // 
-            button1.Location = new Point(236, 67);
+            button1.Location = new Point(338, 62);
             button1.Name = "button1";
-            button1.Size = new Size(75, 23);
+            button1.Size = new Size(39, 23);
             button1.TabIndex = 14;
-            button1.Text = "button1";
+            button1.Text = " + ";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // Form5
             // 
@@ -196,6 +197,7 @@
             Name = "Form5";
             Text = "Form5";
             WindowState = FormWindowState.Maximized;
+            FormClosed += Form5_FormClosed;
             Load += Form5_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();

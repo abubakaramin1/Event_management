@@ -58,8 +58,7 @@ namespace Event_management
             String Password = textBox2.Text;
            
             string query = "SELECT * FROM UserLoginInfo WHERE UserName = @username AND Password = @password AND CatUserRoleId = @role";
-            string connectionString = "Data Source=(local);Initial Catalog=event_management;Integrated Security=True;TrustServerCertificate=True";
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@username", username);
@@ -75,11 +74,27 @@ namespace Event_management
                     reader.Read();
 
                     long userId = (long)reader["Id"];
-                    frm_Main frmMain = new frm_Main(userId);
-
-                    frmMain.Show();
-                    this.Hide();
-                    frmMain.FormClosed += (s, args) => this.Close();
+                    Class1.organizerID = userId;
+                    if (numericValue == 2)
+                    {
+                        frm_Main frmMain = new frm_Main(userId);
+                        frmMain.Show();
+                        this.Hide();
+                            frmMain.FormClosed += (s, args) => {
+                                if (frmMain.IsLogout)
+                                {
+                                    this.Show(); 
+                                }
+                                else
+                                {
+                                    this.Close();
+                                }
+                            };
+                    }
+                    else
+                    {
+                        MessageBox.Show("Not an organizer");
+                    }
                 }
                 else
                 {

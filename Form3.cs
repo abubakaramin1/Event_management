@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -21,17 +22,38 @@ namespace Event_management
         private void Form3_Load(object sender, EventArgs e)
         {
             populateeventlisting();
-           
+
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
         }
         public void populateeventlisting()
         {
-            Class1 class1 = new Class1();
-            ds = class1.ConnectToDatabase();
-            dataGridView1.DataSource = ds.Tables[0];
-            dataGridView1.Columns["EventID"].Visible = false;
+            string query = "select ev.EventID , ev.EventName as [Event Name] , ev.EventDate as [Date] , v.VenueName as Venue , o.FullName as [Organizer] ,ev.Budget,ev.[Description] , ow.FullName as [Owner]from [Events] ev\r\nleft join Venues v on v.VenueID=ev.VenueID\r\nleft join UserLoginInfo o on o.Id=ev.OrganizerID\r\nleft join UserLoginInfo ow on ow.Id=OwnerID where ev.OrganizerID = @organizerid\r\n";
+            DataSet ds = new DataSet();
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    
+
+                    SqlCommand sqlCommand = new SqlCommand(query, connection);
+                    sqlCommand.Parameters.AddWithValue("@organizerid", Class1.organizerID);
+                    SqlDataAdapter adapter = new SqlDataAdapter(sqlCommand);
+
+                    adapter.Fill(ds);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Connection failed: " + ex.Message);
+                }
+
+
+                dataGridView1.DataSource = ds.Tables[0];
+                dataGridView1.Columns["EventID"].Visible = false;
+            }
         }
-        
+
 
 
 
@@ -46,9 +68,13 @@ namespace Event_management
                 Form5 form5 = new Form5(eventId);
                 form5.MdiParent = this.MdiParent;
                 form5.Show();
+                this.Close();
             }
         }
 
-      
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

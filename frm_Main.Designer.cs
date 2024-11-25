@@ -32,12 +32,13 @@
             registerToolStripMenuItem = new ToolStripMenuItem();
             MIaddevent = new ToolStripMenuItem();
             eventOwnerToolStripMenuItem = new ToolStripMenuItem();
+            logOutToolStripMenuItem = new ToolStripMenuItem();
             Mainmenu.SuspendLayout();
             SuspendLayout();
             // 
             // Mainmenu
             // 
-            Mainmenu.Items.AddRange(new ToolStripItem[] { registerToolStripMenuItem });
+            Mainmenu.Items.AddRange(new ToolStripItem[] { registerToolStripMenuItem, logOutToolStripMenuItem });
             Mainmenu.Location = new Point(0, 0);
             Mainmenu.Name = "Mainmenu";
             Mainmenu.Size = new Size(800, 24);
@@ -54,15 +55,23 @@
             // MIaddevent
             // 
             MIaddevent.Name = "MIaddevent";
-            MIaddevent.Size = new Size(141, 22);
+            MIaddevent.Size = new Size(180, 22);
             MIaddevent.Text = "&Add Event";
             MIaddevent.Click += MIaddevent_Click;
             // 
             // eventOwnerToolStripMenuItem
             // 
             eventOwnerToolStripMenuItem.Name = "eventOwnerToolStripMenuItem";
-            eventOwnerToolStripMenuItem.Size = new Size(141, 22);
+            eventOwnerToolStripMenuItem.Size = new Size(180, 22);
             eventOwnerToolStripMenuItem.Text = "Event &Owner";
+            eventOwnerToolStripMenuItem.Click += eventOwnerToolStripMenuItem_Click;
+            // 
+            // logOutToolStripMenuItem
+            // 
+            logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
+            logOutToolStripMenuItem.Size = new Size(59, 20);
+            logOutToolStripMenuItem.Text = "LogOut";
+            logOutToolStripMenuItem.Click += logOutToolStripMenuItem_Click;
             // 
             // frm_Main
             // 
@@ -73,6 +82,7 @@
             IsMdiContainer = true;
             MainMenuStrip = Mainmenu;
             Name = "frm_Main";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "frm_Main";
             WindowState = FormWindowState.Maximized;
             FormClosed += frm_Main_FormClosed;
@@ -89,5 +99,6 @@
         private ToolStripMenuItem registerToolStripMenuItem;
         private ToolStripMenuItem MIaddevent;
         private ToolStripMenuItem eventOwnerToolStripMenuItem;
+        private ToolStripMenuItem logOutToolStripMenuItem;
     }
 }
