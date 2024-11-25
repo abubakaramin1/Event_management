@@ -75,11 +75,21 @@ namespace Event_management
                     reader.Read();
 
                     long userId = (long)reader["Id"];
-                    frm_Main frmMain = new frm_Main(userId);
+                    if (numericValue == 1) // Admin role
+                    {
+                        adminForm1 frmAdmin = new adminForm1(userId); 
+                        frmAdmin.Show();
+                        this.Hide();
+                        frmAdmin.FormClosed += (s, args) => this.Close();
+                    }
+                    else if (numericValue == 2)
+                    {
+                        frm_Main frmMain = new frm_Main(userId);
 
-                    frmMain.Show();
-                    this.Hide();
-                    frmMain.FormClosed += (s, args) => this.Close();
+                        frmMain.Show();
+                        this.Hide();
+                        frmMain.FormClosed += (s, args) => this.Close();
+                    }
                 }
                 else
                 {
