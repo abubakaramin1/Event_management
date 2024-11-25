@@ -13,6 +13,8 @@ namespace Event_management
 {
     public partial class frm_registerowner : Form
     {
+        int catuserrole = 0;
+        string query = null;
         public frm_registerowner()
         {
             InitializeComponent();
@@ -25,17 +27,29 @@ namespace Event_management
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string query = "INSERT INTO UserLoginInfo (UserName, [Password], CatUserRoleId, FullName, Email, PhoneNumber) " +
-                  "VALUES (@UserName, @Password, @CatUserRoleId, @FullName, @Email, @PhoneNumber)";
+            
 
-            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            if (Class1.add_flag == 1)
+            {
+               query = "INSERT INTO UserLoginInfo (UserName, [Password], CatUserRoleId, FullName, Email, PhoneNumber) " +
+                  "VALUES (@UserName, @Password, @CatUserRoleId, @FullName, @Email, @PhoneNumber)";
+                catuserrole = 3;
+            }
+            else if (Class1.add_flag == 2)
+            {
+                catuserrole = 2;
+                query = "insert into UserLoginInfo values\r\n(@UserName, @Password, @CatUserRoleId, @FullName, @Email, @PhoneNumber)";
+            }
+            
+
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))   
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     // Add parameters with their values
                     command.Parameters.AddWithValue("@UserName", txt_username.Text.Trim());
                     command.Parameters.AddWithValue("@Password", txt_password.Text.Trim());
-                    command.Parameters.AddWithValue("@CatUserRoleId", 3); 
+                    command.Parameters.AddWithValue("@CatUserRoleId", catuserrole); 
                     command.Parameters.AddWithValue("@FullName", txt_Name.Text.Trim());
                     command.Parameters.AddWithValue("@Email", txt_email.Text.Trim());
                     command.Parameters.AddWithValue("@PhoneNumber", txt_phonenumber.Text.Trim());

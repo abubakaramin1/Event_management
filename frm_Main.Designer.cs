@@ -32,6 +32,7 @@
             registerToolStripMenuItem = new ToolStripMenuItem();
             MIaddevent = new ToolStripMenuItem();
             eventOwnerToolStripMenuItem = new ToolStripMenuItem();
+            eventOrganizerToolStripMenuItem = new ToolStripMenuItem();
             logOutToolStripMenuItem = new ToolStripMenuItem();
             Mainmenu.SuspendLayout();
             SuspendLayout();
@@ -47,7 +48,7 @@
             // 
             // registerToolStripMenuItem
             // 
-            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { MIaddevent, eventOwnerToolStripMenuItem });
+            registerToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { MIaddevent, eventOwnerToolStripMenuItem, eventOrganizerToolStripMenuItem });
             registerToolStripMenuItem.Name = "registerToolStripMenuItem";
             registerToolStripMenuItem.Size = new Size(61, 20);
             registerToolStripMenuItem.Text = "&Register";
@@ -65,6 +66,13 @@
             eventOwnerToolStripMenuItem.Size = new Size(180, 22);
             eventOwnerToolStripMenuItem.Text = "Event &Owner";
             eventOwnerToolStripMenuItem.Click += eventOwnerToolStripMenuItem_Click;
+            // 
+            // eventOrganizerToolStripMenuItem
+            // 
+            eventOrganizerToolStripMenuItem.Name = "eventOrganizerToolStripMenuItem";
+            eventOrganizerToolStripMenuItem.Size = new Size(180, 22);
+            eventOrganizerToolStripMenuItem.Text = "Event &Organizer";
+            eventOrganizerToolStripMenuItem.Click += eventOrganizerToolStripMenuItem_Click;
             // 
             // logOutToolStripMenuItem
             // 
@@ -100,5 +108,6 @@
         private ToolStripMenuItem MIaddevent;
         private ToolStripMenuItem eventOwnerToolStripMenuItem;
         private ToolStripMenuItem logOutToolStripMenuItem;
+        private ToolStripMenuItem eventOrganizerToolStripMenuItem;
     }
 }

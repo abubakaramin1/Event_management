@@ -75,26 +75,31 @@ namespace Event_management
 
                     long userId = (long)reader["Id"];
                     Class1.organizerID = userId;
+                    
+                    
                     if (numericValue == 2)
                     {
-                        frm_Main frmMain = new frm_Main(userId);
-                        frmMain.Show();
-                        this.Hide();
-                            frmMain.FormClosed += (s, args) => {
-                                if (frmMain.IsLogout)
-                                {
-                                    this.Show(); 
-                                }
-                                else
-                                {
-                                    this.Close();
-                                }
-                            };
+                        Class1.login_flag = 2;
+                        
                     }
-                    else
+                    else if (numericValue  == 1 )
                     {
-                        MessageBox.Show("Not an organizer");
+                        Class1.login_flag = 1;
+                        
                     }
+                    frm_Main frmMain = new frm_Main(userId);
+                    frmMain.Show();
+                    this.Hide();
+                    frmMain.FormClosed += (s, args) => {
+                        if (frmMain.IsLogout)
+                        {
+                            this.Show();
+                        }
+                        else
+                        {
+                            this.Close();
+                        }
+                    };
                 }
                 else
                 {
