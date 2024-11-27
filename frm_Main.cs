@@ -23,7 +23,68 @@ namespace Event_management
 
         }
 
-        private void MIaddevent_Click(object sender, EventArgs e)
+        
+             
+
+
+
+
+        private void frm_Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+        }
+
+
+        private void frm_Main_Load(object sender, EventArgs e)
+        {
+            // Apply the custom renderer to the MainMenuStrip
+            this.MainMenuStrip.Renderer = new RoundedToolStripRenderer();
+
+            // Your existing code for login and form display
+            if (Class1.login_flag == 2)
+            {
+                Form3 frmeventlisting = new Form3();
+                this.addOrganizerToolStripMenuItem.Visible = false;
+                frmeventlisting.MdiParent = this;
+                frmeventlisting.Show();
+            }
+            else if (Class1.login_flag == 1)
+            {
+                adminForm1 adminForm = new adminForm1(userId);
+                adminForm.MdiParent = this;
+                adminForm.Show();
+            }
+
+            toolStripLabel1.Margin = new Padding(300, 0, 20, 0);
+            toolStripLabel2.Margin = new Padding(200, 0, 0, 0);
+            logOutToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
+            registerToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
+            addOrganizerToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
+            addOwnerToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
+
+            registerToolStripMenuItem.Margin = new Padding(10, 112, 10, 0);
+            addOrganizerToolStripMenuItem.Margin = new Padding(10, 112, 10, 0);
+            addOwnerToolStripMenuItem.Margin = new Padding(10, 112, 10, 0);
+            logOutToolStripMenuItem.Margin = new Padding(10, 112, 10, 0);
+        }
+
+
+
+
+
+        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Logged Out succesfully");
+            IsLogout = true;
+            this.Close();
+
+
+
+        }
+
+        
+
+        private void registerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Class1.login_flag == 2)
             {
@@ -50,58 +111,20 @@ namespace Event_management
 
 
             }
-
-
         }
 
-        private void frm_Main_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
-        }
-
-
-        private void frm_Main_Load(object sender, EventArgs e)
-        {
-            if (Class1.login_flag == 2)
-            {
-                Form3 frmeventlisting = new Form3();
-                this.eventOrganizerToolStripMenuItem.Visible = false;
-                frmeventlisting.MdiParent = this;
-                frmeventlisting.Show();
-            }
-            else if (Class1.login_flag == 1)
-            {
-                adminForm1 adminForm = new adminForm1(userId);
-                adminForm.MdiParent = this;
-                adminForm.Show();
-            }
-
-        }
-
-        private void eventOwnerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Class1.add_flag = 1;
-            frm_registerowner frm_Registerowner = new frm_registerowner();
-            frm_Registerowner.Show();
-
-        }
-
-        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Logged Out succesfully");
-            IsLogout = true;
-            this.Close();
-
-
-
-        }
-
-        private void eventOrganizerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addOrganizerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Class1.add_flag = 2;
             frm_registerowner frm_Registerowner = new frm_registerowner();
             frm_Registerowner.Show();
+        }
 
+        private void addOwnerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Class1.add_flag = 1;
+            frm_registerowner frm_Registerowner = new frm_registerowner();
+            frm_Registerowner.Show();
         }
     }
 }

@@ -13,6 +13,9 @@ namespace Event_management
         public Form1()
         {
             InitializeComponent();
+            this.BackColor = Color.FromArgb(214, 192, 179);
+            this.button2 = new RoundedButton();
+
         }
 
         private void PopulateComboBox()
@@ -125,8 +128,11 @@ namespace Event_management
         private void Form1_Load(object sender, EventArgs e)
         {
             PopulateComboBox();
+            //this.StartPosition = FormStartPosition.CenterScreen;
+            //this.WindowState = FormWindowState.Maximized;
         }
     }
+
 
 
 
