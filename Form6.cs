@@ -46,18 +46,62 @@ namespace Event_management
         {
             populateeventlisting();
             CenterDataGridView();
-            dataGridView1.RowHeadersVisible = false;
+
+            // Row header visibility and padding
+            dataGridView1.RowHeadersVisible = true;
+            dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
+            dataGridView1.RowHeadersDefaultCellStyle.Padding = new Padding(5);
+
+            // Disable visual styles to apply custom header styles
+            dataGridView1.EnableHeadersVisualStyles = false;
+
+            // Apply initial header styles
+            ApplyColumnHeaderStyles();
+
             ChangeRowColors();
-            AddGradientShadowEffect(); 
+            AddGradientShadowEffect();
         }
+
+
+        private void ApplyColumnHeaderStyles()
+        {
+            // Ensure visual styles are disabled
+            dataGridView1.EnableHeadersVisualStyles = false;
+
+            // Set header styles
+            
+            
+            dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12);
+
+            // Set header height
+            dataGridView1.ColumnHeadersHeight = 80;
+
+            // Force header redraw
+            dataGridView1.Invalidate(); // Ensures the header is redrawn
+        }
+
+
+
 
         private void ChangeRowColors()
         {
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                row.DefaultCellStyle.BackColor = Color.FromArgb(228, 224, 225); // Set the background color
-                row.DefaultCellStyle.ForeColor = Color.Black; // Optional: Set the text color
+                if (i % 2 == 0) // Even rows
+                {
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(214, 192, 179); // Light color for even rows
+                }
+                else // Odd rows
+                {
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(228, 224, 225); // Default color for odd rows
+                }
+
+                // Optional: Set text color for consistency
+                dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.Black;
             }
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dataGridView1.ColumnHeadersHeight = 40;
         }
 
         private void AddGradientShadowEffect()
@@ -115,6 +159,9 @@ namespace Event_management
                 dataGridView1.DataSource = null; 
             }
         }
+
+
+
 
 
 

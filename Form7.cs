@@ -21,7 +21,7 @@ namespace Event_management
         public AdminForm2(Form listingform, long id)
         {
             InitializeComponent();
-            Listingformobj = (adminForm1)listingform; 
+            Listingformobj = (adminForm1)listingform;
             this.userId = id;
         }
 
@@ -39,7 +39,7 @@ namespace Event_management
 
                     // Populate Venues
                     using (SqlCommand command = new SqlCommand(query, connection))
-                   
+
                     {
                         reader = command.ExecuteReader();
                         comboBox1.Items.Clear();
@@ -64,7 +64,7 @@ namespace Event_management
                     // Populate Event Owners
                     query = "SELECT Id, FullName FROM UserLoginInfo WHERE CatUserRoleId = 3";
                     using (SqlCommand command = new SqlCommand(query, connection))
-                        
+
                     {
                         reader = command.ExecuteReader();
                         comboBox2.Items.Clear();
@@ -83,9 +83,9 @@ namespace Event_management
                     // Populate Event Organizers
                     query = "SELECT Id, FullName FROM UserLoginInfo WHERE CatUserRoleId = 2";
                     using (SqlCommand command = new SqlCommand(query, connection))
-                    
+
                     {
-                        reader= command.ExecuteReader();
+                        reader = command.ExecuteReader();
                         comboBox3.Items.Clear();
                         while (reader.Read())
                         {
@@ -145,7 +145,7 @@ namespace Event_management
                             MessageBox.Show("Event added successfully.");
                             this.Close();
                             Listingformobj.populateeventlisting();
-                      
+
                         }
                         else
                         {
@@ -174,7 +174,14 @@ namespace Event_management
             }
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
 
-        
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

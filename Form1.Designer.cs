@@ -108,9 +108,9 @@
             button2.Cursor = Cursors.Hand;
             button2.FlatStyle = FlatStyle.Popup;
             button2.ForeColor = SystemColors.ControlLightLight;
-            button2.Location = new Point(204, 211);
+            button2.Location = new Point(194, 206);
             button2.Name = "button2";
-            button2.Size = new Size(75, 23);
+            button2.Size = new Size(85, 31);
             button2.TabIndex = 9;
             button2.Text = "Login";
             button2.UseVisualStyleBackColor = false;

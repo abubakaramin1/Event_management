@@ -21,7 +21,7 @@ namespace Event_management
         private void Form3_Load(object sender, EventArgs e)
         {
             populateeventlisting();
-
+            ChangeHeaderRowColor();
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
         }
         public void populateeventlisting()
@@ -34,6 +34,18 @@ namespace Event_management
                 dataGridView1.Columns["EventID"].Visible = false;
             
             
+        }
+
+        private void ChangeHeaderRowColor()
+        {
+            // Change the background color of the header row
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(171, 136, 109);
+
+            // Optionally, change the foreground color (text color)
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+
+            // Apply any other styles you want
+            dataGridView1.EnableHeadersVisualStyles = false; // Required for custom styling to take effect
         }
 
 
