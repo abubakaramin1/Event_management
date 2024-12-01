@@ -80,23 +80,30 @@ namespace Event_management
                         reader.Close();
                     }
 
-                    // Populate Event Organizers
-                    query = "SELECT Id, FullName FROM UserLoginInfo WHERE CatUserRoleId = 2";
-                    using (SqlCommand command = new SqlCommand(query, connection))
-
+                    if (Class1.login_flag == 1)
                     {
-                        reader = command.ExecuteReader();
-                        comboBox3.Items.Clear();
-                        while (reader.Read())
+                        query = "SELECT Id, FullName FROM UserLoginInfo WHERE CatUserRoleId = 2";
+                        using (SqlCommand command = new SqlCommand(query, connection))
+
                         {
-                            ComboBoxItem item = new ComboBoxItem
+                            reader = command.ExecuteReader();
+                            comboBox3.Items.Clear();
+                            while (reader.Read())
                             {
-                                Id = Convert.ToInt32(reader["Id"]),
-                                Text = reader["FullName"].ToString()
-                            };
-                            comboBox3.Items.Add(item);
+                                ComboBoxItem item = new ComboBoxItem
+                                {
+                                    Id = Convert.ToInt32(reader["Id"]),
+                                    Text = reader["FullName"].ToString()
+                                };
+                                comboBox3.Items.Add(item);
+                            }
+                            reader.Close();
                         }
-                        reader.Close();
+                    }
+                    else if(Class1.login_flag == 2)
+                    {
+                        label7.Visible = false;
+                        comboBox3.Visible = false;
                     }
                 }
                 catch (Exception ex)
@@ -112,13 +119,22 @@ namespace Event_management
 
         private void button1_Click(object sender, EventArgs e)
         {
+            long OrganizerID = 0;
             string EventName = textBox1.Text;
             DateTime EventDate = dateTimePicker1.Value.Date;
             int VenueID = ((ComboBoxItem)comboBox1.SelectedItem).Id;
             decimal Budget = decimal.Parse(textBox2.Text);
             string Description = textBox3.Text;
             int OwnerID = ((ComboBoxItem)comboBox2.SelectedItem).Id;
-            int OrganizerID = ((ComboBoxItem)comboBox3.SelectedItem).Id;
+            if (Class1.login_flag == 1)
+            {
+                OrganizerID = ((ComboBoxItem)comboBox3.SelectedItem).Id;
+            }
+            else if (Class1.login_flag == 2)
+            {
+                OrganizerID = Class1.organizerID;
+            }
+                
 
             string query = "INSERT INTO Events (EventName, EventDate, VenueID, OrganizerID, Budget, Description, OwnerID) " +
                            "VALUES (@EventName, @EventDate, @VenueID, @OrganizerID, @Budget, @Description, @OwnerID)";
@@ -133,7 +149,12 @@ namespace Event_management
                     command.Parameters.AddWithValue("@Budget", Budget);
                     command.Parameters.AddWithValue("@Description", Description);
                     command.Parameters.AddWithValue("@OwnerID", OwnerID);
-                    command.Parameters.AddWithValue("@OrganizerID", OrganizerID);
+                    
+                    
+                        command.Parameters.AddWithValue("@OrganizerID", OrganizerID);
+                    
+                    
+                    
 
                     try
                     {

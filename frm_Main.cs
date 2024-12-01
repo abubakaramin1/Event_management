@@ -41,19 +41,19 @@ namespace Event_management
             this.MainMenuStrip.Renderer = new RoundedToolStripRenderer();
 
             // Your existing code for login and form display
-            if (Class1.login_flag == 2)
-            {
-                Form3 frmeventlisting = new Form3();
-                this.addOrganizerToolStripMenuItem.Visible = false;
-                frmeventlisting.MdiParent = this;
-                frmeventlisting.Show();
-            }
-            else if (Class1.login_flag == 1)
-            {
-                adminForm1 adminForm = new adminForm1(userId);
+            //if (Class1.login_flag == 2)
+            //{
+            //    Form3 frmeventlisting = new Form3();
+            //    this.addOrganizerToolStripMenuItem.Visible = false;
+            //    frmeventlisting.MdiParent = this;
+            //    frmeventlisting.Show();
+            //}
+            //else if (Class1.login_flag == 1)
+            //{
+                adminForm1 adminForm = new adminForm1();
                 adminForm.MdiParent = this;
                 adminForm.Show();
-            }
+            //}
 
             toolStripLabel1.Margin = new Padding(300, 0, 20, 0);
             toolStripLabel2.Margin = new Padding(200, 0, 0, 0);
@@ -86,20 +86,20 @@ namespace Event_management
 
         private void registerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Class1.login_flag == 2)
-            {
-                Form listingform = new Form3();
-                foreach (Form child in this.MdiChildren)
-                {
-                    if (child.Text == "Form3")
-                        listingform = child;
-                }
-                Form4 frmaddevent = new Form4(listingform, userId);
-                frmaddevent.ShowDialog();
-            }
-            else if (Class1.login_flag == 1)
-            {
-                Form adminform = new adminForm1(userId);
+            //if (Class1.login_flag == 2)
+            //{
+            //    Form listingform = new Form3();
+            //    foreach (Form child in this.MdiChildren)
+            //    {
+            //        if (child.Text == "Form3")
+            //            listingform = child;
+            //    }
+            //    Form4 frmaddevent = new Form4(listingform, userId);
+            //    frmaddevent.ShowDialog();
+            //}
+            //else if (Class1.login_flag == 1)
+            //{
+                Form adminform = new adminForm1();
                 foreach (Form child in this.MdiChildren)
                 {
                     if (child.Text == "Form6")
@@ -110,7 +110,7 @@ namespace Event_management
 
 
 
-            }
+            //}
         }
 
         private void addOrganizerToolStripMenuItem_Click(object sender, EventArgs e)

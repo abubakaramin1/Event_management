@@ -14,21 +14,24 @@ namespace Event_management
 {
     public partial class adminForm1 : Form
     {
-        long userId;
+        
         DataSet ds;
         ShadowPanel shadowPanel;
 
 
-        public adminForm1(long Id)
+
+        public adminForm1()
         {
             InitializeComponent();
             
 
-            userId = Id;
+           
             this.Resize += new EventHandler(adminForm1_Resize);
+            dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
+
         }
 
-       
+
 
         private void ChangeHeaderRowColor()
         {
@@ -140,7 +143,19 @@ namespace Event_management
 
         public void populateeventlisting()
         {
-            string query = "select ev.EventID , ev.EventName as [Event Name] , ev.EventDate as [Date] , v.VenueName as Venue , o.FullName as [Organizer] ,ev.Budget,ev.[Description] , ow.FullName as [Owner]from [Events] ev\r\nleft join Venues v on v.VenueID=ev.VenueID\r\nleft join UserLoginInfo o on o.Id=ev.OrganizerID\r\nleft join UserLoginInfo ow on ow.Id=OwnerID ";
+            string query = null;
+            if(Class1.login_flag == 1)
+            {
+                query = "select ev.EventID , ev.EventName as [Event Name] , ev.EventDate as [Date] , v.VenueName as Venue , o.FullName as [Organizer] ,ev.Budget,ev.[Description] , ow.FullName as [Owner]from [Events] ev\r\nleft join Venues v on v.VenueID=ev.VenueID\r\nleft join UserLoginInfo o on o.Id=ev.OrganizerID\r\nleft join UserLoginInfo ow on ow.Id=OwnerID ";
+
+            }
+
+            else if(Class1.login_flag == 2)
+            {
+                 query = "select ev.EventID , ev.EventName as [Event Name] , ev.EventDate as [Date] , v.VenueName as Venue , o.FullName as [Organizer] ,ev.Budget,ev.[Description] , ow.FullName as [Owner]from [Events] ev\r\nleft join Venues v on v.VenueID=ev.VenueID\r\nleft join UserLoginInfo o on o.Id=ev.OrganizerID\r\nleft join UserLoginInfo ow on ow.Id=OwnerID where ev.OrganizerID = @organizerid\r\n";
+
+            }
+
 
             ds = Class1.populateeventlisting(query);
 
@@ -160,12 +175,26 @@ namespace Event_management
             }
         }
 
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                int eventId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["EventID"].Value);
+
+
+                Form5 form5 = new Form5(eventId);
+                form5.MdiParent = this.MdiParent;
+                form5.Show();
+                this.Close();
+            }
+        }
 
 
 
 
 
-        
+
+
 
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

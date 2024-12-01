@@ -225,10 +225,10 @@ namespace Event_management
 
         private void Form5_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Form3 form3 = new Form3();
-            form3.MdiParent = this.MdiParent;
-            form3.Show();
             
+            adminForm1 adminForm = new adminForm1();
+            adminForm.MdiParent = this.MdiParent;
+            adminForm.Show();
         }
     }
 
