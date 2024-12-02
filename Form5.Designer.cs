@@ -30,7 +30,6 @@
         {
             dataGridView1 = new DataGridView();
             label1 = new Label();
-            textBox1 = new TextBox();
             label2 = new Label();
             dataGridView2 = new DataGridView();
             label3 = new Label();
@@ -39,10 +38,13 @@
             textBox2 = new TextBox();
             textBox3 = new TextBox();
             label6 = new Label();
-            textBox4 = new TextBox();
             label7 = new Label();
             textBox5 = new TextBox();
             button1 = new Button();
+            comboBoxOrganizer = new ComboBox();
+            comboBoxVenue = new ComboBox();
+            buttonSave = new Button();
+            textBox1 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
@@ -65,14 +67,6 @@
             label1.Size = new Size(39, 15);
             label1.TabIndex = 1;
             label1.Text = "Venue";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(302, 277);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(159, 23);
-            textBox1.TabIndex = 2;
-            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // label2
             // 
@@ -141,13 +135,6 @@
             label6.TabIndex = 10;
             label6.Text = "Organizer";
             // 
-            // textBox4
-            // 
-            textBox4.Location = new Point(162, 23);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(149, 23);
-            textBox4.TabIndex = 11;
-            // 
             // label7
             // 
             label7.AutoSize = true;
@@ -174,15 +161,52 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // comboBoxOrganizer
+            // 
+            comboBoxOrganizer.FormattingEnabled = true;
+            comboBoxOrganizer.Location = new Point(141, 26);
+            comboBoxOrganizer.Name = "comboBoxOrganizer";
+            comboBoxOrganizer.Size = new Size(155, 23);
+            comboBoxOrganizer.TabIndex = 15;
+            // 
+            // comboBoxVenue
+            // 
+            comboBoxVenue.FormattingEnabled = true;
+            comboBoxVenue.Location = new Point(302, 282);
+            comboBoxVenue.Name = "comboBoxVenue";
+            comboBoxVenue.Size = new Size(159, 23);
+            comboBoxVenue.TabIndex = 16;
+            // 
+            // buttonSave
+            // 
+            buttonSave.Location = new Point(649, 415);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new Size(75, 23);
+            buttonSave.TabIndex = 17;
+            buttonSave.Text = "save";
+            buttonSave.UseVisualStyleBackColor = true;
+            buttonSave.Click += buttonSave_Click;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(141, 26);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(155, 23);
+            textBox1.TabIndex = 18;
+            textBox1.TextChanged += textBox1_TextChanged_1;
+            // 
             // Form5
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(textBox1);
+            Controls.Add(buttonSave);
+            Controls.Add(comboBoxVenue);
+            Controls.Add(comboBoxOrganizer);
             Controls.Add(button1);
             Controls.Add(textBox5);
             Controls.Add(label7);
-            Controls.Add(textBox4);
             Controls.Add(label6);
             Controls.Add(textBox3);
             Controls.Add(textBox2);
@@ -191,7 +215,6 @@
             Controls.Add(label3);
             Controls.Add(dataGridView2);
             Controls.Add(label2);
-            Controls.Add(textBox1);
             Controls.Add(label1);
             Controls.Add(dataGridView1);
             Name = "Form5";
@@ -209,7 +232,6 @@
 
         private DataGridView dataGridView1;
         private Label label1;
-        private TextBox textBox1;
         private Label label2;
         private DataGridView dataGridView2;
         private Label label3;
@@ -218,9 +240,12 @@
         private TextBox textBox2;
         private TextBox textBox3;
         private Label label6;
-        private TextBox textBox4;
         private Label label7;
         private TextBox textBox5;
         private Button button1;
+        private ComboBox comboBoxOrganizer;
+        private ComboBox comboBoxVenue;
+        private Button buttonSave;
+        private TextBox textBox1;
     }
 }
