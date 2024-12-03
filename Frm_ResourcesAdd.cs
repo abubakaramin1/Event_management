@@ -52,9 +52,26 @@ namespace Event_management
                         SqlDataAdapter adapter = new SqlDataAdapter(commandUseDate);
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
+                        dataTable.Columns.Add("AvailabilityStatus", typeof(string));
+
+                        foreach (DataRow row in dataTable.Rows)
+                        {
+                            if (row["Available"] != DBNull.Value && Convert.ToInt32(row["Available"]) < 0)
+                            {
+                                row["AvailabilityStatus"] = "Not Available";
+                            }
+                            else
+                            {
+                                row["AvailabilityStatus"] = row["Available"].ToString();
+                            }
+                        }
                         dataGridView1.DataSource = dataTable;
                         dataGridView1.Columns["Required"].DisplayIndex = dataGridView1.Columns.Count - 1;
                         dataGridView1.Columns["ResourceID"].Visible = false;
+                        dataGridView1.Columns["AvailabilityStatus"].HeaderText = "Available Amount";
+                        dataGridView1.Columns["AvailabilityStatus"].DisplayIndex = dataGridView1.Columns.Count - 2;
+                        dataGridView1.Columns["Available"].Visible = false;
+
 
                     }
 

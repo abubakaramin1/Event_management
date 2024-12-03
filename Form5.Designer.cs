@@ -43,6 +43,7 @@
             label7 = new Label();
             textBox5 = new TextBox();
             button1 = new Button();
+            button2 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
@@ -174,11 +175,22 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // button2
+            // 
+            button2.Location = new Point(650, 62);
+            button2.Name = "button2";
+            button2.Size = new Size(122, 23);
+            button2.TabIndex = 15;
+            button2.Text = "Import Attendees";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // Form5
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(textBox5);
             Controls.Add(label7);
@@ -222,5 +234,6 @@
         private Label label7;
         private TextBox textBox5;
         private Button button1;
+        private Button button2;
     }
 }

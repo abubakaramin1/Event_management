@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OfficeOpenXml;
 
 namespace Event_management
 {
@@ -25,6 +26,8 @@ namespace Event_management
 
 
         }
+
+
         public void reloadresources()
         {
             string query = "\t\t \r\nSELECT r.ResourceName, r.Quantity, r.Cost, er.QuantityUsed\r\nFROM Resources r\r\nINNER JOIN Event_Resources er \r\n    ON r.ResourceID = er.ResourceID\r\nINNER JOIN Events e \r\n    ON er.EventID = e.EventID\r\nWHERE e.EventID = @EventID;";
@@ -42,6 +45,25 @@ namespace Event_management
                 dataGridView1.DataSource = eventDetailsTable;
 
                 HighlightExceededQuantities();
+            }
+        }
+
+        public void reloadattendees()
+        {
+            string attendeeQuery = "select * from UserLoginInfo where Id in( " +
+                    "select AttendeeID from Event_Attendees where EventID in (@EventID))";
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand(attendeeQuery, connection);
+                cmd.Parameters.AddWithValue("@EventID", eventId);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable eventDetailsTable = new DataTable();
+                adapter.Fill(eventDetailsTable);
+
+                dataGridView2.DataSource = eventDetailsTable;
             }
         }
 
@@ -76,7 +98,7 @@ namespace Event_management
                     connection.Open();
                     SqlCommand cmd = new SqlCommand(venueQuery, connection);
                     cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();  
+                    var result = cmd.ExecuteScalar();
 
                     if (result != null)
                     {
@@ -92,7 +114,7 @@ namespace Event_management
                     connection.Open();
                     SqlCommand cmd = new SqlCommand(estimatedQuery, connection);
                     cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();  
+                    var result = cmd.ExecuteScalar();
 
                     if (result != null)
                     {
@@ -124,7 +146,7 @@ namespace Event_management
                     connection.Open();
                     SqlCommand cmd = new SqlCommand(organizerQuery, connection);
                     cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();  
+                    var result = cmd.ExecuteScalar();
 
                     if (result != null)
                     {
@@ -225,11 +247,144 @@ namespace Event_management
 
         private void Form5_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+
             adminForm1 adminForm = new adminForm1();
             adminForm.MdiParent = this.MdiParent;
             adminForm.Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Excel Files|*.xls;*.xlsx",
+                Title = "Select an Excel File"
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                ImportAttendeesToEvent(filePath, eventId);
+
+            }
+
+        }
+
+        private void ImportAttendeesToEvent(string filePath, int eventId)
+        {
+            DataTable attendeesTable = new DataTable();
+
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                attendeesTable.Columns.Add("FullName");
+                attendeesTable.Columns.Add("Email");
+                attendeesTable.Columns.Add("PhoneNumber");
+
+                for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
+                {
+                    DataRow dr = attendeesTable.NewRow();
+                    dr["FullName"] = worksheet.Cells[row, 1].Text;
+                    dr["Email"] = worksheet.Cells[row, 2].Text;
+                    dr["PhoneNumber"] = worksheet.Cells[row, 3].Text;
+                    attendeesTable.Rows.Add(dr);
+                }
+            }
+
+            // Step 1: Insert into UserLoginInfo and get inserted IDs
+            List<int> attendeeIds = InsertAttendeesIntoUserLoginInfo(attendeesTable);
+
+            // Step 2: Insert into Event_Attendees
+            if (attendeeIds.Count > 0)
+            {
+                MapAttendeesToEvent(attendeeIds, eventId);
+                DialogResult result =  MessageBox.Show("Attendees imported and mapped to the event successfully!");
+                if (result == DialogResult.OK)
+                {
+                    reloadattendees();
+                }
+            }
+            else
+            {
+                MessageBox.Show("No attendees were added.");
+            }
+        }
+
+
+        private void MapAttendeesToEvent(List<int> attendeeIds, int eventId)
+        {
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            {
+                string query = @"
+            INSERT INTO Event_Attendees (EventID, AttendeeID)
+            VALUES (@EventId, @AttendeeId)";
+
+                try
+                {
+                    connection.Open();
+
+                    foreach (int attendeeId in attendeeIds)
+                    {
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@EventId", eventId);
+                            command.Parameters.AddWithValue("@AttendeeId", attendeeId);
+
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while mapping attendees to the event: {ex.Message}");
+                }
+            }
+        }
+
+        private List<int> InsertAttendeesIntoUserLoginInfo(DataTable attendeesTable)
+        {
+            List<int> insertedIds = new List<int>();
+
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            {
+                string query = @"
+            INSERT INTO UserLoginInfo (FullName, Email, PhoneNumber,CatUserRoleId) 
+            OUTPUT INSERTED.Id 
+            VALUES (@FullName, @Email, @PhoneNumber,@id)";
+
+                try
+                {
+                    connection.Open();
+
+                    foreach (DataRow row in attendeesTable.Rows)
+                    {
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@FullName", row["FullName"]);
+                            command.Parameters.AddWithValue("@Email", row["Email"]);
+                            command.Parameters.AddWithValue("@PhoneNumber", row["PhoneNumber"]);
+                            command.Parameters.AddWithValue("@id", 4);
+
+                            object result = command.ExecuteScalar();
+                            if (result != null)
+                            {
+                                insertedIds.Add(Convert.ToInt32(result));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while inserting attendees: {ex.Message}");
+                }
+            }
+
+            return insertedIds;
+        }
+
+
+       
+
     }
 
 }
