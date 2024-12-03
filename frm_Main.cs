@@ -54,7 +54,7 @@ namespace Event_management
                 adminForm.MdiParent = this;
                 adminForm.Show();
             //}
-
+            
             toolStripLabel1.Margin = new Padding(300, 0, 20, 0);
             toolStripLabel2.Margin = new Padding(200, 0, 0, 0);
             logOutToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);

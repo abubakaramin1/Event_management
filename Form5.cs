@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,18 +14,29 @@ using OfficeOpenXml;
 
 namespace Event_management
 {
+
     public partial class Form5 : Form
     {
         private int eventId;
+        private bool isLoading = false;
+        adminForm1 Listingformobj;
 
         public Form5(int eventId)
         {
             InitializeComponent();
             this.eventId = eventId;
+            // Store the reference to the existing AdminForm1
             this.Shown += Form5_Shown;
             this.FormClosed += Form5_FormClosed;
+        }
 
-
+        public Form5(int eventId, Form listingForm)
+        {   
+            InitializeComponent();
+            this.eventId = eventId;
+            // Store the reference to the existing AdminForm1
+            this.Shown += Form5_Shown;
+            this.FormClosed += Form5_FormClosed;
         }
 
 
@@ -78,8 +90,23 @@ namespace Event_management
                 string organizerQuery = "select FullName from UserLoginInfo where Id in ( select OrganizerID from Events where EventID in (@EventID))";
                 string dateQuery = "\r\nselect eventDate from Events where EventID = @EventID";
                 string venueQuery = "SELECT VenueName FROM Venues WHERE VenueID = (SELECT VenueID FROM Events WHERE EventID = @EventID)";
+                string organizer = "select FullName from UserLoginInfo where Id in ( select OrganizerID from Events where EventID in (@EventID))";
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+                    SqlCommand cmd = new SqlCommand(organizer, connection);
+                    cmd.Parameters.AddWithValue("@EventID", eventId);
+                    var result = cmd.ExecuteScalar();
 
-
+                    if (result != null)
+                    {
+                        textBox1.Text = result.ToString();
+                    }
+                    else
+                    {
+                        textBox1.Text = "Organizer: Not Available";
+                    }
+                }
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
@@ -102,11 +129,11 @@ namespace Event_management
 
                     if (result != null)
                     {
-                        textBox1.Text = result.ToString();
+                        comboBoxVenue.Text = result.ToString();
                     }
                     else
                     {
-                        textBox1.Text = "Venue: Not Available";
+                        comboBoxVenue.Text = "Venue: Not Available";
                     }
                 }
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
@@ -150,11 +177,15 @@ namespace Event_management
 
                     if (result != null)
                     {
-                        textBox4.Text = result.ToString();
+                        string organizerName = result.ToString();
+                        LoadOrganizerNames(); // Populate the ComboBox
+
+                        // Set the selected organizer
+                        comboBoxOrganizer.SelectedItem = organizerName;
                     }
                     else
                     {
-                        textBox4.Text = "Organizer : Not Available";
+                        comboBoxOrganizer.Text = "Organizer: Not Available";
                     }
                 }
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
@@ -201,6 +232,18 @@ namespace Event_management
         {
             LoadEventDetails();
             reloadresources();
+            if (Class1.login_flag == 1)
+            {
+                LoadOrganizerNames();
+                textBox1.Visible = false;
+
+            }
+            else
+            {
+
+                comboBoxOrganizer.Visible = false;
+            }
+            LoadVenues();
 
         }
 
@@ -253,22 +296,7 @@ namespace Event_management
             adminForm.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Filter = "Excel Files|*.xls;*.xlsx",
-                Title = "Select an Excel File"
-            };
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string filePath = openFileDialog.FileName;
-                ImportAttendeesToEvent(filePath, eventId);
-
-            }
-
-        }
 
         private void ImportAttendeesToEvent(string filePath, int eventId)
         {
@@ -298,7 +326,7 @@ namespace Event_management
             if (attendeeIds.Count > 0)
             {
                 MapAttendeesToEvent(attendeeIds, eventId);
-                DialogResult result =  MessageBox.Show("Attendees imported and mapped to the event successfully!");
+                DialogResult result = MessageBox.Show("Attendees imported and mapped to the event successfully!");
                 if (result == DialogResult.OK)
                 {
                     reloadattendees();
@@ -310,13 +338,53 @@ namespace Event_management
             }
         }
 
+        private List<int> InsertAttendeesIntoUserLoginInfo(DataTable attendeesTable)
+        {
+            List<int> insertedIds = new List<int>();
+
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            {
+                string query = @"
+            INSERT INTO UserLoginInfo (FullName, Email, CatUserRoleId , PhoneNumber) 
+            OUTPUT INSERTED.Id 
+            VALUES (@FullName, @Email,@role, @PhoneNumber)";
+
+                try
+                {
+                    connection.Open();
+
+                    foreach (DataRow row in attendeesTable.Rows)
+                    {
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@FullName", row["FullName"]);
+                            command.Parameters.AddWithValue("@Email", row["Email"]);
+                            command.Parameters.AddWithValue("@PhoneNumber", row["PhoneNumber"]);
+                            command.Parameters.AddWithValue("@role", 4);
+
+                            object result = command.ExecuteScalar();
+                            if (result != null)
+                            {
+                                insertedIds.Add(Convert.ToInt32(result));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while inserting attendees: {ex.Message}");
+                }
+            }
+
+            return insertedIds;
+        }
 
         private void MapAttendeesToEvent(List<int> attendeeIds, int eventId)
         {
             using (SqlConnection connection = new SqlConnection(Class1.connectionString))
             {
                 string query = @"
-            INSERT INTO Event_Attendees (EventID, AttendeeID)
+            INSERT INTO Event_Attendees (EventId, AttendeeId)
             VALUES (@EventId, @AttendeeId)";
 
                 try
@@ -341,51 +409,178 @@ namespace Event_management
             }
         }
 
-        private List<int> InsertAttendeesIntoUserLoginInfo(DataTable attendeesTable)
+
+
+        private void LoadOrganizerNames()
         {
-            List<int> insertedIds = new List<int>();
-
-            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            try
             {
-                string query = @"
-            INSERT INTO UserLoginInfo (FullName, Email, PhoneNumber,CatUserRoleId) 
-            OUTPUT INSERTED.Id 
-            VALUES (@FullName, @Email, @PhoneNumber,@id)";
+                // Define query to fetch organizer names
+                string query = "select FullName from UserLoginInfo\r\nwhere CatUserRoleId = 2";
 
-                try
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
 
-                    foreach (DataRow row in attendeesTable.Rows)
-                    {
-                        using (SqlCommand command = new SqlCommand(query, connection))
-                        {
-                            command.Parameters.AddWithValue("@FullName", row["FullName"]);
-                            command.Parameters.AddWithValue("@Email", row["Email"]);
-                            command.Parameters.AddWithValue("@PhoneNumber", row["PhoneNumber"]);
-                            command.Parameters.AddWithValue("@id", 4);
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    SqlDataReader reader = cmd.ExecuteReader();
 
-                            object result = command.ExecuteScalar();
-                            if (result != null)
-                            {
-                                insertedIds.Add(Convert.ToInt32(result));
-                            }
-                        }
+                    // Clear any existing items in the ComboBox
+                    comboBoxOrganizer.Items.Clear();
+
+                    // Populate the ComboBox with organizer names
+                    while (reader.Read())
+                    {
+                        comboBoxOrganizer.Items.Add(reader["FullName"].ToString());
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An error occurred while inserting attendees: {ex.Message}");
-                }
             }
-
-            return insertedIds;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading organizer names: {ex.Message}");
+            }
         }
 
+        private void LoadVenues()
+        {
+            try
+            {
+                string query = "select VenueName from Venues";
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    comboBoxVenue.Items.Clear();
+                    while (reader.Read())
+                    {
+                        comboBoxVenue.Items.Add(reader["VenueName"].ToString());
+                    }
+                }
 
-       
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading venues: {ex.Message}");
+            }
+        }
 
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                // Initialize query parts
+                string query = "UPDATE Events SET ";
+                List<string> updateFields = new List<string>();
+                Dictionary<string, object> parameters = new Dictionary<string, object>();
+
+                // Check and add fields to update if they have been modified
+                if (comboBoxOrganizer.SelectedItem != null)
+                {
+                    updateFields.Add("OrganizerID = (SELECT Id FROM UserLoginInfo WHERE FullName = @OrganizerName)");
+                    parameters["@OrganizerName"] = comboBoxOrganizer.SelectedItem.ToString();
+
+                }
+
+                if (comboBoxVenue.SelectedItem != null)
+                {
+                    updateFields.Add("VenueID = (SELECT VenueID FROM Venues WHERE VenueName = @VenueName)");
+                    parameters["@VenueName"] = comboBoxVenue.SelectedItem.ToString();
+                }
+
+                if (!string.IsNullOrWhiteSpace(textBox5.Text))
+                {
+                    if (DateTime.TryParseExact(textBox5.Text, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
+                    {
+                        updateFields.Add("EventDate = @EventDate");
+                        parameters["@EventDate"] = parsedDate;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid date format! Use 'dd-MM-yyyy'.");
+                        return;
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(textBox2.Text))
+                {
+                    if (decimal.TryParse(textBox2.Text, out decimal parsedBudget))
+                    {
+                        updateFields.Add("Budget = @Budget");
+                        parameters["@Budget"] = parsedBudget;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid budget format! Please enter a numeric value.");
+                        return;
+                    }
+                }
+
+                // If no fields are modified, show a message and return
+                if (updateFields.Count == 0)
+                {
+                    MessageBox.Show("No fields have been modified!");
+                    return;
+                }
+
+                // Combine query
+                query += string.Join(", ", updateFields) + " WHERE EventID = @EventID";
+
+                // Execute the query
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+                    SqlCommand cmd = new SqlCommand(query, connection);
+
+                    // Add parameters
+                    foreach (var param in parameters)
+                    {
+                        cmd.Parameters.AddWithValue(param.Key, param.Value);
+                    }
+                    cmd.Parameters.AddWithValue("@EventID", eventId);
+
+                    // Execute the update
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Event details updated successfully!");
+
+                        // Refresh the listing in AdminForm1
+
+
+                        // Close Form5
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to update event details. Please try again.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating event details: {ex.Message}");
+            }
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Excel Files|*.xls;*.xlsx",
+                Title = "Select an Excel File"
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                ImportAttendeesToEvent(filePath, eventId);
+
+            }
+        }
     }
-
 }
 
