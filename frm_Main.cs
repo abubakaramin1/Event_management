@@ -23,8 +23,8 @@ namespace Event_management
 
         }
 
-        
-             
+
+
 
 
 
@@ -50,11 +50,11 @@ namespace Event_management
             //}
             //else if (Class1.login_flag == 1)
             //{
-                adminForm1 adminForm = new adminForm1();
-                adminForm.MdiParent = this;
-                adminForm.Show();
+            adminForm1 adminForm = new adminForm1();
+            adminForm.MdiParent = this;
+            adminForm.Show();
             //}
-            
+
             toolStripLabel1.Margin = new Padding(300, 0, 20, 0);
             toolStripLabel2.Margin = new Padding(200, 0, 0, 0);
             logOutToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
@@ -82,7 +82,7 @@ namespace Event_management
 
         }
 
-        
+
 
         private void registerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -99,14 +99,14 @@ namespace Event_management
             //}
             //else if (Class1.login_flag == 1)
             //{
-                Form adminform = new adminForm1();
-                foreach (Form child in this.MdiChildren)
-                {
-                    if (child.Text == "Form6")
-                        adminform = child;
-                }
-                AdminForm2 form2 = new AdminForm2(adminform, userId); // Pass the current form reference
-                form2.Show(); // Show AdminForm2
+            Form adminform = new adminForm1();
+            foreach (Form child in this.MdiChildren)
+            {
+                if (child.Text == "Form6")
+                    adminform = child;
+            }
+            AdminForm2 form2 = new AdminForm2(adminform, userId); // Pass the current form reference
+            form2.Show(); // Show AdminForm2
 
 
 
@@ -125,6 +125,14 @@ namespace Event_management
             Class1.add_flag = 1;
             frm_registerowner frm_Registerowner = new frm_registerowner();
             frm_Registerowner.Show();
+        }
+
+        private void addResourceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            updateResources form = new updateResources();
+            form.MdiParent = this;
+            form.Show();
+
         }
     }
 }

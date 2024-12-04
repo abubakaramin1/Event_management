@@ -51,7 +51,7 @@ namespace Event_management
             CenterDataGridView();
 
             // Row header visibility and padding
-            dataGridView1.RowHeadersVisible = true;
+            dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
             dataGridView1.RowHeadersDefaultCellStyle.Padding = new Padding(5);
 
