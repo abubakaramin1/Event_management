@@ -24,25 +24,32 @@ namespace Event_management
             loadresources();
         }
 
-        public void loadresources()
+        private void loadresources()
         {
-            string query = "SELECT r.ResourceID,r.ResourceName, r.Quantity, r.Cost FROM Resources r";
-            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            try
             {
-                connection.Open();
+                string query = "SELECT ResourceID, ResourceName, Cost, Quantity FROM Resources";
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
 
-                SqlCommand cmd = new SqlCommand(query, connection);
+                    dataGridView1.DataSource = dt;
 
-
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                DataTable eventDetailsTable = new DataTable();
-                adapter.Fill(eventDetailsTable);
-
-                dataGridView1.DataSource = eventDetailsTable;
-                dataGridView1.Columns[0].Visible = false;
-
+                    if (dataGridView1.Columns["ResourceID"] != null)
+                    {
+                        dataGridView1.Columns["ResourceID"].Visible = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading resources: {ex.Message}");
             }
         }
+
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -50,10 +57,18 @@ namespace Event_management
             {
                 int resourceId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["ResourceID"].Value);
 
-
                 resourcesForm form = new resourcesForm(resourceId);
-                form.Show();
+
+                // Subscribe to the ResourceUpdated event
+                form.ResourceUpdated += () =>
+                {
+                    loadresources(); // Refresh the DataGridView
+                };
+
+                form.ShowDialog();
             }
         }
+
+
     }
 }
