@@ -19,6 +19,8 @@ namespace Event_management
     {
         private long eventId;
         string originalprofit;
+        string originalvenue;
+
         private bool isLoading = false;
         adminForm1 Listingformobj;
 
@@ -178,7 +180,7 @@ namespace Event_management
 
                     if (result != null)
                     {
-                        comboBoxVenue.Text = result.ToString();
+                        originalvenue =  comboBoxVenue.Text = result.ToString();
                     }
                     else
                     {
@@ -348,10 +350,10 @@ namespace Event_management
 
         private void Form5_FormClosed(object sender, FormClosedEventArgs e)
         {
-
             adminForm1 adminForm = new adminForm1();
             adminForm.MdiParent = this.MdiParent;
             adminForm.Show();
+
         }
 
 
@@ -526,6 +528,7 @@ namespace Event_management
         private void buttonSave_Click(object sender, EventArgs e)
         {
             string profitText =null;
+            string venue = null;
             try
             {
                 // Initialize query parts
@@ -543,6 +546,7 @@ namespace Event_management
                 if (comboBoxVenue.SelectedItem != null)
                 {
                     updateFields.Add("VenueID = (SELECT VenueID FROM Venues WHERE VenueName = @VenueName)");
+                    venue = comboBoxVenue.SelectedItem.ToString();
                     parameters["@VenueName"] = comboBoxVenue.SelectedItem.ToString();
                 }
 
@@ -629,7 +633,7 @@ namespace Event_management
                     {
                         MessageBox.Show("Event details updated successfully!");
 
-                        if(originalprofit != profitText)
+                        if(originalprofit != profitText || originalvenue != venue)
                         {
                             Class1.CalculateEventCost(eventId);
 

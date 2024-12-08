@@ -35,9 +35,9 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(252, 75);
+            dataGridView1.Location = new Point(183, 75);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(302, 232);
+            dataGridView1.Size = new Size(458, 232);
             dataGridView1.TabIndex = 1;
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
             // 
@@ -49,6 +49,7 @@
             Controls.Add(dataGridView1);
             Name = "updateResources";
             Text = "updateResources";
+            FormClosed += updateResources_FormClosed;
             Load += updateResources_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

@@ -16,11 +16,11 @@ namespace Event_management
         public bool IsLogout { get; private set; } = false;
 
 
+
         public frm_Main(long Id)
         {
             InitializeComponent();
             userId = Id;
-
         }
 
 
@@ -51,6 +51,7 @@ namespace Event_management
             //else if (Class1.login_flag == 1)
             //{
             adminForm1 adminForm = new adminForm1();
+
             adminForm.MdiParent = this;
             adminForm.Show();
             //}
@@ -86,31 +87,19 @@ namespace Event_management
 
         private void registerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //if (Class1.login_flag == 2)
-            //{
-            //    Form listingform = new Form3();
-            //    foreach (Form child in this.MdiChildren)
-            //    {
-            //        if (child.Text == "Form3")
-            //            listingform = child;
-            //    }
-            //    Form4 frmaddevent = new Form4(listingform, userId);
-            //    frmaddevent.ShowDialog();
-            //}
-            //else if (Class1.login_flag == 1)
-            //{
+            
             Form adminform = new adminForm1();
             foreach (Form child in this.MdiChildren)
             {
                 if (child.Text == "Form6")
                     adminform = child;
             }
-            AdminForm2 form2 = new AdminForm2(adminform, userId); // Pass the current form reference
-            form2.Show(); // Show AdminForm2
+            AdminForm2 form2 = new AdminForm2(adminform, userId); 
+            form2.Show(); 
 
 
 
-            //}
+           
         }
 
         private void addOrganizerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -132,7 +121,15 @@ namespace Event_management
             updateResources form = new updateResources();
             form.MdiParent = this;
             form.Show();
+            
 
+
+        }
+
+        private void addVenueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddVenue addVenue = new AddVenue();
+            addVenue.Show();
         }
     }
 }

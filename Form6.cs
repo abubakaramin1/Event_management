@@ -186,6 +186,7 @@ namespace Event_management
                 form5.MdiParent = this.MdiParent;
                 form5.Show();
                 this.Close();
+
             }
         }
 
