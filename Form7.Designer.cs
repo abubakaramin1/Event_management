@@ -44,6 +44,8 @@
             dateTimePicker1 = new DateTimePicker();
             button1 = new RoundedButton();
             splitContainer1 = new SplitContainer();
+            label8 = new Label();
+            roundedTextBox1 = new RoundedTextBox();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -212,6 +214,7 @@
             // splitContainer1.Panel1
             // 
             splitContainer1.Panel1.BackColor = Color.FromArgb(214, 192, 174);
+            splitContainer1.Panel1.Controls.Add(label8);
             splitContainer1.Panel1.Controls.Add(label7);
             splitContainer1.Panel1.Controls.Add(label6);
             splitContainer1.Panel1.Controls.Add(label1);
@@ -223,6 +226,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.BackColor = Color.FromArgb(171, 136, 109);
+            splitContainer1.Panel2.Controls.Add(roundedTextBox1);
             splitContainer1.Panel2.Controls.Add(comboBox3);
             splitContainer1.Panel2.Controls.Add(comboBox2);
             splitContainer1.Panel2.Controls.Add(textBox3);
@@ -233,6 +237,24 @@
             splitContainer1.Size = new Size(510, 374);
             splitContainer1.SplitterDistance = 170;
             splitContainer1.TabIndex = 15;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.Location = new Point(42, 354);
+            label8.Name = "label8";
+            label8.Size = new Size(39, 15);
+            label8.TabIndex = 7;
+            label8.Text = "Profit";
+            // 
+            // roundedTextBox1
+            // 
+            roundedTextBox1.BorderRadius = 20;
+            roundedTextBox1.Location = new Point(55, 351);
+            roundedTextBox1.Name = "roundedTextBox1";
+            roundedTextBox1.Size = new Size(209, 23);
+            roundedTextBox1.TabIndex = 14;
             // 
             // AdminForm2
             // 
@@ -274,5 +296,7 @@
 
         private Event_management.RoundedButton button1;
         private SplitContainer splitContainer1;
+        private Label label8;
+        private RoundedTextBox roundedTextBox1;
     }
 }

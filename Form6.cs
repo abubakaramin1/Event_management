@@ -179,7 +179,7 @@ namespace Event_management
         {
             if (e.RowIndex >= 0)
             {
-                int eventId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["EventID"].Value);
+                long eventId = Convert.ToInt64(dataGridView1.Rows[e.RowIndex].Cells["EventID"].Value);
 
 
                 Form5 form5 = new Form5(eventId);

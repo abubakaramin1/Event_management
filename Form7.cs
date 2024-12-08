@@ -126,6 +126,8 @@ namespace Event_management
             decimal Budget = decimal.Parse(textBox2.Text);
             string Description = textBox3.Text;
             int OwnerID = ((ComboBoxItem)comboBox2.SelectedItem).Id;
+            decimal ProfitPercentage = decimal.Parse(roundedTextBox1.Text); 
+
             if (Class1.login_flag == 1)
             {
                 OrganizerID = ((ComboBoxItem)comboBox3.SelectedItem).Id;
@@ -134,11 +136,12 @@ namespace Event_management
             {
                 OrganizerID = Class1.organizerID;
             }
+
+            string query = "INSERT INTO Events (EventName, EventDate, VenueID, OrganizerID, Budget, Description, OwnerID, ProfitPercentage) " +
+                   "VALUES (@EventName, @EventDate, @VenueID, @OrganizerID, @Budget, @Description, @OwnerID, @ProfitPercentage); " +
+                   "SELECT SCOPE_IDENTITY();";
+
                 
-
-            string query = "INSERT INTO Events (EventName, EventDate, VenueID, OrganizerID, Budget, Description, OwnerID) " +
-                           "VALUES (@EventName, @EventDate, @VenueID, @OrganizerID, @Budget, @Description, @OwnerID)";
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -149,24 +152,23 @@ namespace Event_management
                     command.Parameters.AddWithValue("@Budget", Budget);
                     command.Parameters.AddWithValue("@Description", Description);
                     command.Parameters.AddWithValue("@OwnerID", OwnerID);
-                    
-                    
-                        command.Parameters.AddWithValue("@OrganizerID", OrganizerID);
-                    
-                    
-                    
+                    command.Parameters.AddWithValue("@OrganizerID", OrganizerID);
+                    command.Parameters.AddWithValue("@ProfitPercentage", ProfitPercentage);
 
                     try
                     {
                         connection.Open();
-                        int rowsAffected = command.ExecuteNonQuery();
+                        object result = command.ExecuteScalar();
 
-                        if (rowsAffected > 0)
+                        if (result != null)
                         {
+                            long eventID = Convert.ToInt64(result); 
+
+
                             MessageBox.Show("Event added successfully.");
+                            Class1.CalculateEventCost(eventID);
                             this.Close();
                             Listingformobj.populateeventlisting();
-
                         }
                         else
                         {

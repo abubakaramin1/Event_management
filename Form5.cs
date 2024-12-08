@@ -17,11 +17,12 @@ namespace Event_management
 
     public partial class Form5 : Form
     {
-        private int eventId;
+        private long eventId;
+        string originalprofit;
         private bool isLoading = false;
         adminForm1 Listingformobj;
 
-        public Form5(int eventId)
+        public Form5(long eventId)
         {
             InitializeComponent();
             this.eventId = eventId;
@@ -30,7 +31,7 @@ namespace Event_management
             this.FormClosed += Form5_FormClosed;
         }
 
-        public Form5(int eventId, Form listingForm)
+        public Form5(long eventId, Form listingForm)
         {   
             InitializeComponent();
             this.eventId = eventId;
@@ -79,38 +80,83 @@ namespace Event_management
             }
         }
 
+        public void reloadcost()
+        {
+            string actualQuery = "SELECT ActualCost FROM Events WHERE EventID = @EventID";
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            {
+                connection.Open();
+
+                // Actual Cost Query
+                SqlCommand cmd = new SqlCommand(actualQuery, connection);
+                cmd.Parameters.AddWithValue("@EventID", eventId);
+                var result = cmd.ExecuteScalar();
+
+                if (!Convert.IsDBNull(result))
+                {
+                    textBox3.Text = result.ToString();
+                }
+                else
+                {
+                    textBox3.Text = "Cost: Not Available";
+                }
+            }
+        }
+
         public void LoadEventDetails()
         {
             try
             {
-                string attendeeQuery = "select * from UserLoginInfo where Id in( " +
-                    "select AttendeeID from Event_Attendees where EventID in (@EventID))";
-                string estimatedQuery = "select Budget from Events where EventID = @EventID";
-                string actualQuery = "select ActualCost from Events where EventID = @EventID";
-                string organizerQuery = "select FullName from UserLoginInfo where Id in ( select OrganizerID from Events where EventID in (@EventID))";
-                string dateQuery = "\r\nselect eventDate from Events where EventID = @EventID";
+                string attendeeQuery = "SELECT * FROM UserLoginInfo WHERE Id IN ( " +
+                                       "SELECT AttendeeID FROM Event_Attendees WHERE EventID = @EventID)";
+                string estimatedQuery = "SELECT Budget FROM Events WHERE EventID = @EventID";
+                string actualQuery = "SELECT ActualCost FROM Events WHERE EventID = @EventID";
+                string organizerQuery = "SELECT FullName FROM UserLoginInfo WHERE Id IN ( SELECT OrganizerID FROM Events WHERE EventID = @EventID)";
+                string dateQuery = "SELECT EventDate FROM Events WHERE EventID = @EventID";
                 string venueQuery = "SELECT VenueName FROM Venues WHERE VenueID = (SELECT VenueID FROM Events WHERE EventID = @EventID)";
-                string organizer = "select FullName from UserLoginInfo where Id in ( select OrganizerID from Events where EventID in (@EventID))";
+                string profitQuery = "SELECT ProfitPercentage FROM Events WHERE EventID = @EventID";
+                string query = "\t\t \r\nSELECT r.ResourceName, r.Quantity, r.Cost, er.QuantityUsed\r\nFROM Resources r\r\nINNER JOIN Event_Resources er \r\n    ON r.ResourceID = er.ResourceID\r\nINNER JOIN Events e \r\n    ON er.EventID = e.EventID\r\nWHERE e.EventID = @EventID;";
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
-                    SqlCommand cmd = new SqlCommand(organizer, connection);
+
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@EventID", eventId);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataTable eventDetailsTable = new DataTable();
+                    adapter.Fill(eventDetailsTable);
+
+                    dataGridView1.DataSource = eventDetailsTable;
+
+                    HighlightExceededQuantities();
+                }
+
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+
+                    // Organizer Query
+                    SqlCommand cmd = new SqlCommand(organizerQuery, connection);
                     cmd.Parameters.AddWithValue("@EventID", eventId);
                     var result = cmd.ExecuteScalar();
 
                     if (result != null)
                     {
                         textBox1.Text = result.ToString();
+                        comboBoxOrganizer.Text = result.ToString();
                     }
                     else
                     {
                         textBox1.Text = "Organizer: Not Available";
                     }
                 }
+
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
 
+                    // Attendee Query
                     SqlCommand cmd = new SqlCommand(attendeeQuery, connection);
                     cmd.Parameters.AddWithValue("@EventID", eventId);
 
@@ -120,9 +166,12 @@ namespace Event_management
 
                     dataGridView2.DataSource = eventDetailsTable;
                 }
+
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
+
+                    // Venue Query
                     SqlCommand cmd = new SqlCommand(venueQuery, connection);
                     cmd.Parameters.AddWithValue("@EventID", eventId);
                     var result = cmd.ExecuteScalar();
@@ -136,9 +185,12 @@ namespace Event_management
                         comboBoxVenue.Text = "Venue: Not Available";
                     }
                 }
+
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
+
+                    // Estimated Budget Query
                     SqlCommand cmd = new SqlCommand(estimatedQuery, connection);
                     cmd.Parameters.AddWithValue("@EventID", eventId);
                     var result = cmd.ExecuteScalar();
@@ -149,15 +201,18 @@ namespace Event_management
                     }
                     else
                     {
-                        textBox2.Text = "Budget : Not available";
+                        textBox2.Text = "Budget: Not Available";
                     }
                 }
+
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
+
+                    // Actual Cost Query
                     SqlCommand cmd = new SqlCommand(actualQuery, connection);
                     cmd.Parameters.AddWithValue("@EventID", eventId);
-                    object result = cmd.ExecuteScalar();
+                    var result = cmd.ExecuteScalar();
 
                     if (!Convert.IsDBNull(result))
                     {
@@ -168,32 +223,15 @@ namespace Event_management
                         textBox3.Text = "Cost: Not Available";
                     }
                 }
+
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
-                    SqlCommand cmd = new SqlCommand(organizerQuery, connection);
-                    cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();
 
-                    if (result != null)
-                    {
-                        string organizerName = result.ToString();
-                        LoadOrganizerNames(); // Populate the ComboBox
-
-                        // Set the selected organizer
-                        comboBoxOrganizer.SelectedItem = organizerName;
-                    }
-                    else
-                    {
-                        comboBoxOrganizer.Text = "Organizer: Not Available";
-                    }
-                }
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
+                    // Date Query
                     SqlCommand cmd = new SqlCommand(dateQuery, connection);
                     cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();  // ExecuteScalar returns a single value
+                    var result = cmd.ExecuteScalar();
 
                     if (result != null)
                     {
@@ -202,16 +240,36 @@ namespace Event_management
                     }
                     else
                     {
-                        textBox5.Text = "Date : Not Available";
+                        textBox5.Text = "Date: Not Available";
                     }
                 }
 
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+
+                    // Profit Query
+                    SqlCommand cmd = new SqlCommand(profitQuery, connection);
+                    cmd.Parameters.AddWithValue("@EventID", eventId);
+                    var result = cmd.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        originalprofit = result.ToString();
+                        textBoxProfit.Text = result.ToString() + " %"; 
+                    }
+                    else
+                    {
+                        textBoxProfit.Text = "Profit: Not Available";
+                    }
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading event details: {ex.Message}");
             }
         }
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -230,8 +288,8 @@ namespace Event_management
         }
         private void Form5_Shown(object sender, EventArgs e)
         {
+           
             LoadEventDetails();
-            reloadresources();
             if (Class1.login_flag == 1)
             {
                 LoadOrganizerNames();
@@ -298,7 +356,7 @@ namespace Event_management
 
 
 
-        private void ImportAttendeesToEvent(string filePath, int eventId)
+        private void ImportAttendeesToEvent(string filePath, long eventId)
         {
             DataTable attendeesTable = new DataTable();
 
@@ -320,7 +378,7 @@ namespace Event_management
             }
 
             // Step 1: Insert into UserLoginInfo and get inserted IDs
-            List<int> attendeeIds = InsertAttendeesIntoUserLoginInfo(attendeesTable);
+            List<long> attendeeIds = InsertAttendeesIntoUserLoginInfo(attendeesTable);
 
             // Step 2: Insert into Event_Attendees
             if (attendeeIds.Count > 0)
@@ -338,9 +396,9 @@ namespace Event_management
             }
         }
 
-        private List<int> InsertAttendeesIntoUserLoginInfo(DataTable attendeesTable)
+        private List<long> InsertAttendeesIntoUserLoginInfo(DataTable attendeesTable)
         {
-            List<int> insertedIds = new List<int>();
+            List<long> insertedIds = new List<long>();
 
             using (SqlConnection connection = new SqlConnection(Class1.connectionString))
             {
@@ -379,7 +437,7 @@ namespace Event_management
             return insertedIds;
         }
 
-        private void MapAttendeesToEvent(List<int> attendeeIds, int eventId)
+        private void MapAttendeesToEvent(List<long> attendeeIds, long eventId)
         {
             using (SqlConnection connection = new SqlConnection(Class1.connectionString))
             {
@@ -467,7 +525,7 @@ namespace Event_management
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-
+            string profitText =null;
             try
             {
                 // Initialize query parts
@@ -480,7 +538,6 @@ namespace Event_management
                 {
                     updateFields.Add("OrganizerID = (SELECT Id FROM UserLoginInfo WHERE FullName = @OrganizerName)");
                     parameters["@OrganizerName"] = comboBoxOrganizer.SelectedItem.ToString();
-
                 }
 
                 if (comboBoxVenue.SelectedItem != null)
@@ -517,6 +574,31 @@ namespace Event_management
                     }
                 }
 
+                if (!string.IsNullOrWhiteSpace(textBoxProfit.Text))
+                {
+                     profitText = textBoxProfit.Text.Trim();
+
+                    // Remove the '%' sign if it exists
+                    if (profitText.EndsWith("%"))
+                    {
+                        profitText = profitText.TrimEnd('%');
+                    }
+
+                    profitText = profitText.Trim();
+
+                    // Attempt to parse the profit value
+                    if (decimal.TryParse(profitText, out decimal parsedProfit))
+                    {
+                        updateFields.Add("ProfitPercentage = @Profit");
+                        parameters["@Profit"] = parsedProfit;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid profit format! Please enter a numeric value.");
+                        return;
+                    }
+                }
+
                 // If no fields are modified, show a message and return
                 if (updateFields.Count == 0)
                 {
@@ -547,11 +629,12 @@ namespace Event_management
                     {
                         MessageBox.Show("Event details updated successfully!");
 
-                        // Refresh the listing in AdminForm1
+                        if(originalprofit != profitText)
+                        {
+                            Class1.CalculateEventCost(eventId);
 
-
-                        // Close Form5
-                        this.Close();
+                        }
+                        LoadEventDetails();
                     }
                     else
                     {
@@ -563,8 +646,8 @@ namespace Event_management
             {
                 MessageBox.Show($"Error updating event details: {ex.Message}");
             }
-
         }
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -581,6 +664,9 @@ namespace Event_management
 
             }
         }
+
+        
+
     }
 }
 

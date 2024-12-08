@@ -46,6 +46,8 @@
             comboBoxVenue = new ComboBox();
             buttonSave = new Button();
             button2 = new Button();
+            label8 = new Label();
+            textBoxProfit = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
@@ -205,11 +207,29 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(162, 448);
+            label8.Name = "label8";
+            label8.Size = new Size(36, 15);
+            label8.TabIndex = 20;
+            label8.Text = "Profit";
+            // 
+            // textBoxProfit
+            // 
+            textBoxProfit.Location = new Point(302, 445);
+            textBoxProfit.Name = "textBoxProfit";
+            textBoxProfit.Size = new Size(159, 23);
+            textBoxProfit.TabIndex = 21;
+            // 
             // Form5
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 495);
+            Controls.Add(textBoxProfit);
+            Controls.Add(label8);
             Controls.Add(button2);
             Controls.Add(buttonSave);
             Controls.Add(comboBoxVenue);
@@ -259,5 +279,7 @@
         private ComboBox comboBoxVenue;
         private Button buttonSave;
         private Button button2;
+        private Label label8;
+        private TextBox textBoxProfit;
     }
 }

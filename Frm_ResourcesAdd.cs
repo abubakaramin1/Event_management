@@ -13,10 +13,10 @@ namespace Event_management
 {
     public partial class Frm_ResourcesAdd : Form
     {
-        int eventId;
+        long eventId;
         string connectionString = Class1.connectionString;
         Form5 eventDetails;
-        public Frm_ResourcesAdd(Form eventDetails,int eventId)
+        public Frm_ResourcesAdd(Form eventDetails,long eventId)
         {
             InitializeComponent();
             this.eventId = eventId;
@@ -166,6 +166,8 @@ namespace Event_management
         private void Frm_ResourcesAdd_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.eventDetails.reloadresources();
+            Class1.CalculateEventCost(eventId);
+            this.eventDetails.reloadcost();
         }
     }
 }
