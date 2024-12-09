@@ -71,7 +71,9 @@ namespace Event_management
 
         private void updateResources_FormClosed(object sender, FormClosedEventArgs e)
         {
-
+            adminForm1 admin = new adminForm1();
+            admin.MdiParent = this.MdiParent;
+            admin.Show();
         }
     }
 }

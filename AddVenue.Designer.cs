@@ -137,6 +137,7 @@
             Controls.Add(label1);
             Name = "AddVenue";
             Text = "AddVenue";
+            FormClosed += AddVenue_FormClosed;
             ResumeLayout(false);
             PerformLayout();
         }

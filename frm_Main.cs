@@ -15,6 +15,7 @@ namespace Event_management
         long userId;
         public bool IsLogout { get; private set; } = false;
 
+        adminForm1 adminForm = new adminForm1();
 
 
         public frm_Main(long Id)
@@ -50,7 +51,6 @@ namespace Event_management
             //}
             //else if (Class1.login_flag == 1)
             //{
-            adminForm1 adminForm = new adminForm1();
 
             adminForm.MdiParent = this;
             adminForm.Show();
@@ -58,15 +58,23 @@ namespace Event_management
 
             toolStripLabel1.Margin = new Padding(300, 0, 20, 0);
             toolStripLabel2.Margin = new Padding(200, 0, 0, 0);
+
             logOutToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
             registerToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
             addOrganizerToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
             addOwnerToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
+            addResourceToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
+            addVenueToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
+            viewVenuesToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
 
-            registerToolStripMenuItem.Margin = new Padding(10, 112, 10, 0);
-            addOrganizerToolStripMenuItem.Margin = new Padding(10, 112, 10, 0);
-            addOwnerToolStripMenuItem.Margin = new Padding(10, 112, 10, 0);
-            logOutToolStripMenuItem.Margin = new Padding(10, 112, 10, 0);
+            registerToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
+            addOrganizerToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
+            addOwnerToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
+            logOutToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
+            addResourceToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
+            addVenueToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
+            viewVenuesToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
+
         }
 
 
@@ -87,33 +95,33 @@ namespace Event_management
 
         private void registerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
             Form adminform = new adminForm1();
             foreach (Form child in this.MdiChildren)
             {
                 if (child.Text == "Form6")
                     adminform = child;
             }
-            AdminForm2 form2 = new AdminForm2(adminform, userId); 
-            form2.Show(); 
+            AdminForm2 form2 = new AdminForm2(adminform, userId);
+            form2.Show();
 
 
 
-           
+
         }
 
         private void addOrganizerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Class1.add_flag = 2;
             frm_registerowner frm_Registerowner = new frm_registerowner();
-            frm_Registerowner.Show();
+            frm_Registerowner.ShowDialog();
         }
 
         private void addOwnerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Class1.add_flag = 1;
             frm_registerowner frm_Registerowner = new frm_registerowner();
-            frm_Registerowner.Show();
+            frm_Registerowner.ShowDialog();
         }
 
         private void addResourceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -121,15 +129,23 @@ namespace Event_management
             updateResources form = new updateResources();
             form.MdiParent = this;
             form.Show();
-            
-
-
+            adminForm.Close();
         }
 
         private void addVenueToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddVenue addVenue = new AddVenue();
-            addVenue.Show();
+            addVenue.ShowDialog();
+        }
+
+        private void viewVenuesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            frm_venues venues = new frm_venues();
+            venues.MdiParent = this;
+            venues.Show();
+            adminForm.Close();
+
         }
     }
 }

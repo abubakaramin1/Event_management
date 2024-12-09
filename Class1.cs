@@ -15,6 +15,27 @@ namespace Event_management
         public static string connectionString = "Data Source=(local);Initial Catalog=event_management;Integrated Security=True;TrustServerCertificate=True";
         public static int login_flag;
         public static int add_flag;
+        public static int venue_flag;
+
+
+        public static DataTable loadvenues()
+        {
+            string attendeeQuery = "select * from Venues";
+            DataTable eventDetailsTable = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand(attendeeQuery, connection);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(eventDetailsTable);
+            }
+
+            return eventDetailsTable;
+        }
+
         public static DataSet populateeventlisting(string query)
         {
             DataSet ds = new DataSet();

@@ -13,6 +13,12 @@ namespace Event_management
 {
     public partial class AddVenue : Form
     {
+        frm_venues frm_Venues = new frm_venues();
+        public AddVenue(frm_venues venues)
+        {
+            InitializeComponent();
+            frm_Venues = venues;
+        }
         public AddVenue()
         {
             InitializeComponent();
@@ -69,7 +75,7 @@ namespace Event_management
                         {
                             MessageBox.Show("Venue added successfully.");
                             this.Close();
-                          
+
                         }
                         else
                         {
@@ -81,6 +87,14 @@ namespace Event_management
                         MessageBox.Show($"An error occurred: {ex.Message}");
                     }
                 }
+            }
+        }
+
+        private void AddVenue_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if(Class1.venue_flag == 1)
+            {
+                frm_Venues.showvenues();
             }
         }
     }
