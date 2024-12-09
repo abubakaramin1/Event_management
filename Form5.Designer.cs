@@ -48,6 +48,7 @@
             button2 = new Button();
             label8 = new Label();
             textBoxProfit = new TextBox();
+            button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
@@ -223,11 +224,22 @@
             textBoxProfit.Size = new Size(159, 23);
             textBoxProfit.TabIndex = 21;
             // 
+            // button3
+            // 
+            button3.Location = new Point(642, 285);
+            button3.Name = "button3";
+            button3.Size = new Size(116, 23);
+            button3.TabIndex = 22;
+            button3.Text = "Generate Tickets";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
             // Form5
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 495);
+            Controls.Add(button3);
             Controls.Add(textBoxProfit);
             Controls.Add(label8);
             Controls.Add(button2);
@@ -281,5 +293,6 @@
         private Button button2;
         private Label label8;
         private TextBox textBoxProfit;
+        private Button button3;
     }
 }

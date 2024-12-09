@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OfficeOpenXml;
+using QRCoder;
 
 namespace Event_management
 {
@@ -34,7 +35,7 @@ namespace Event_management
         }
 
         public Form5(long eventId, Form listingForm)
-        {   
+        {
             InitializeComponent();
             this.eventId = eventId;
             // Store the reference to the existing AdminForm1
@@ -180,7 +181,7 @@ namespace Event_management
 
                     if (result != null)
                     {
-                        originalvenue =  comboBoxVenue.Text = result.ToString();
+                        originalvenue = comboBoxVenue.Text = result.ToString();
                     }
                     else
                     {
@@ -258,7 +259,7 @@ namespace Event_management
                     if (result != null)
                     {
                         originalprofit = result.ToString();
-                        textBoxProfit.Text = result.ToString() + " %"; 
+                        textBoxProfit.Text = result.ToString() + " %";
                     }
                     else
                     {
@@ -290,7 +291,7 @@ namespace Event_management
         }
         private void Form5_Shown(object sender, EventArgs e)
         {
-           
+
             LoadEventDetails();
             if (Class1.login_flag == 1)
             {
@@ -527,7 +528,7 @@ namespace Event_management
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            string profitText =null;
+            string profitText = null;
             string venue = null;
             try
             {
@@ -580,7 +581,7 @@ namespace Event_management
 
                 if (!string.IsNullOrWhiteSpace(textBoxProfit.Text))
                 {
-                     profitText = textBoxProfit.Text.Trim();
+                    profitText = textBoxProfit.Text.Trim();
 
                     // Remove the '%' sign if it exists
                     if (profitText.EndsWith("%"))
@@ -633,7 +634,7 @@ namespace Event_management
                     {
                         MessageBox.Show("Event details updated successfully!");
 
-                        if(originalprofit != profitText || originalvenue != venue)
+                        if (originalprofit != profitText || originalvenue != venue)
                         {
                             Class1.CalculateEventCost(eventId);
 
@@ -668,9 +669,71 @@ namespace Event_management
 
             }
         }
+       
 
-        
+        private List<(string AttendeeName, string EventName, DateTime EventDate, string VenueName, string TicketID)> FetchTicketData(long eventId)
+        {
+            var ticketData = new List<(string AttendeeName, string EventName, DateTime EventDate, string VenueName, string TicketID)>();
 
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            {
+                connection.Open();
+
+                string query = @"
+        SELECT 
+                UI.FullName AS AttendeeName,  
+                E.EventName,
+                E.EventDate,
+                V.VenueName,
+                CONCAT(E.EventID, '-', EA.AttendeeID) AS TicketID
+            FROM 
+                Event_Attendees EA
+            JOIN Events E ON EA.EventID = E.EventID
+            JOIN Venues V ON E.VenueID = V.VenueID
+            JOIN UserLoginInfo UI ON EA.AttendeeID = UI.Id  
+            WHERE E.EventID = @EventID";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@EventID", eventId);
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ticketData.Add((
+                        reader["AttendeeName"].ToString(),
+                        reader["EventName"].ToString(),
+                        Convert.ToDateTime(reader["EventDate"]).Date,
+                        reader["VenueName"].ToString(),
+                        reader["TicketID"].ToString()
+                    ));
+                }
+            }
+
+            return ticketData;
+        }
+
+      
+
+
+       
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedFolder = folderDialog.SelectedPath;
+                    // Generate ticket data (this method only fetches data)
+                    var tickets = FetchTicketData(eventId);
+
+                    // Open the TicketPreviewForm to show thumbnails
+                    TicketPreviewForm previewForm = new TicketPreviewForm(tickets, selectedFolder, eventId);
+                    previewForm.ShowDialog(); // Show the form as a dialog
+                }
+            }
+        }
     }
 }
 
