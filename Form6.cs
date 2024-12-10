@@ -36,13 +36,13 @@ namespace Event_management
         private void ChangeHeaderRowColor()
         {
             // Change the background color of the header row
-            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(171, 136, 109);
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(73, 54, 40);
 
             // Optionally, change the foreground color (text color)
             dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;           
 
             // Apply any other styles you want
-            dataGridView1.EnableHeadersVisualStyles = false; // Required for custom styling to take effect
+            dataGridView1.EnableHeadersVisualStyles = true; // Required for custom styling to take effect
         }
 
         private void adminForm1_Load(object sender, EventArgs e)
@@ -72,17 +72,19 @@ namespace Event_management
             dataGridView1.EnableHeadersVisualStyles = false;
 
             // Set header styles
-            
-            
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(73, 54, 40); // RGB(73, 54, 40)
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White; // White text
+            dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold); // Bold font
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12);
+            // Set font to bold
 
             // Set header height
             dataGridView1.ColumnHeadersHeight = 80;
 
             // Force header redraw
-            dataGridView1.Invalidate(); // Ensures the header is redrawn
+            dataGridView1.Refresh(); // Refresh ensures all style changes are applied
         }
+
 
 
 

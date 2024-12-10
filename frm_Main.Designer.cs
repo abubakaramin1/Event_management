@@ -45,12 +45,12 @@
             // 
             // Mainmenu
             // 
-            Mainmenu.BackColor = Color.FromArgb(228, 224, 225);
+            Mainmenu.BackColor = Color.FromArgb(171, 136, 109);
             Mainmenu.Dock = DockStyle.Left;
-            Mainmenu.Items.AddRange(new ToolStripItem[] { registerToolStripMenuItem, addOrganizerToolStripMenuItem, addOwnerToolStripMenuItem, logOutToolStripMenuItem, addResourceToolStripMenuItem, addVenueToolStripMenuItem, viewVenuesToolStripMenuItem });
+            Mainmenu.Items.AddRange(new ToolStripItem[] { registerToolStripMenuItem, addOrganizerToolStripMenuItem, addOwnerToolStripMenuItem, addResourceToolStripMenuItem, addVenueToolStripMenuItem, viewVenuesToolStripMenuItem, logOutToolStripMenuItem });
             Mainmenu.Location = new Point(0, 0);
             Mainmenu.Name = "Mainmenu";
-            Mainmenu.Size = new Size(106, 450);
+            Mainmenu.Size = new Size(126, 450);
             Mainmenu.TabIndex = 1;
             Mainmenu.Text = "menuStrip1";
             // 
@@ -59,7 +59,7 @@
             registerToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
             registerToolStripMenuItem.ForeColor = Color.White;
             registerToolStripMenuItem.Name = "registerToolStripMenuItem";
-            registerToolStripMenuItem.Size = new Size(93, 19);
+            registerToolStripMenuItem.Size = new Size(113, 19);
             registerToolStripMenuItem.Text = "Add Event";
             registerToolStripMenuItem.Click += registerToolStripMenuItem_Click;
             // 
@@ -68,7 +68,7 @@
             addOrganizerToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
             addOrganizerToolStripMenuItem.ForeColor = Color.White;
             addOrganizerToolStripMenuItem.Name = "addOrganizerToolStripMenuItem";
-            addOrganizerToolStripMenuItem.Size = new Size(93, 19);
+            addOrganizerToolStripMenuItem.Size = new Size(113, 19);
             addOrganizerToolStripMenuItem.Text = "Add Organizer";
             addOrganizerToolStripMenuItem.Click += addOrganizerToolStripMenuItem_Click;
             // 
@@ -77,7 +77,7 @@
             addOwnerToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
             addOwnerToolStripMenuItem.ForeColor = Color.White;
             addOwnerToolStripMenuItem.Name = "addOwnerToolStripMenuItem";
-            addOwnerToolStripMenuItem.Size = new Size(93, 19);
+            addOwnerToolStripMenuItem.Size = new Size(113, 19);
             addOwnerToolStripMenuItem.Text = "Add Owner";
             addOwnerToolStripMenuItem.Click += addOwnerToolStripMenuItem_Click;
             // 
@@ -86,7 +86,7 @@
             logOutToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
             logOutToolStripMenuItem.ForeColor = Color.White;
             logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            logOutToolStripMenuItem.Size = new Size(93, 19);
+            logOutToolStripMenuItem.Size = new Size(113, 19);
             logOutToolStripMenuItem.Text = "LogOut";
             logOutToolStripMenuItem.Click += logOutToolStripMenuItem_Click;
             // 
@@ -95,7 +95,7 @@
             addResourceToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
             addResourceToolStripMenuItem.ForeColor = Color.White;
             addResourceToolStripMenuItem.Name = "addResourceToolStripMenuItem";
-            addResourceToolStripMenuItem.Size = new Size(93, 19);
+            addResourceToolStripMenuItem.Size = new Size(113, 19);
             addResourceToolStripMenuItem.Text = "View Resources";
             addResourceToolStripMenuItem.Click += addResourceToolStripMenuItem_Click;
             // 
@@ -105,7 +105,7 @@
             addVenueToolStripMenuItem.BackgroundImageLayout = ImageLayout.None;
             addVenueToolStripMenuItem.ForeColor = Color.White;
             addVenueToolStripMenuItem.Name = "addVenueToolStripMenuItem";
-            addVenueToolStripMenuItem.Size = new Size(93, 19);
+            addVenueToolStripMenuItem.Size = new Size(113, 19);
             addVenueToolStripMenuItem.Text = "Add Venue";
             addVenueToolStripMenuItem.Click += addVenueToolStripMenuItem_Click;
             // 
@@ -114,18 +114,18 @@
             viewVenuesToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
             viewVenuesToolStripMenuItem.ForeColor = Color.White;
             viewVenuesToolStripMenuItem.Name = "viewVenuesToolStripMenuItem";
-            viewVenuesToolStripMenuItem.Size = new Size(93, 19);
+            viewVenuesToolStripMenuItem.Size = new Size(113, 19);
             viewVenuesToolStripMenuItem.Text = "View Venues";
             viewVenuesToolStripMenuItem.Click += viewVenuesToolStripMenuItem_Click;
             // 
             // toolStrip1
             // 
-            toolStrip1.BackColor = Color.FromArgb(228, 224, 225);
+            toolStrip1.BackColor = Color.FromArgb(171, 136, 109);
             toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripLabel1, toolStripLabel2 });
             toolStrip1.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            toolStrip1.Location = new Point(106, 0);
+            toolStrip1.Location = new Point(126, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(718, 46);
+            toolStrip1.Size = new Size(698, 46);
             toolStrip1.Stretch = true;
             toolStrip1.TabIndex = 3;
             toolStrip1.Text = "toolStrip1";

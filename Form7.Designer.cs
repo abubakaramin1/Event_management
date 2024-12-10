@@ -56,7 +56,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(42, 43);
+            label1.Location = new Point(32, 24);
             label1.Name = "label1";
             label1.Size = new Size(78, 15);
             label1.TabIndex = 0;
@@ -67,7 +67,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(42, 91);
+            label2.Location = new Point(32, 74);
             label2.Name = "label2";
             label2.Size = new Size(34, 15);
             label2.TabIndex = 1;
@@ -77,7 +77,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(42, 136);
+            label3.Location = new Point(32, 119);
             label3.Name = "label3";
             label3.Size = new Size(42, 15);
             label3.TabIndex = 2;
@@ -88,7 +88,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(39, 187);
+            label4.Location = new Point(32, 168);
             label4.Name = "label4";
             label4.Size = new Size(48, 15);
             label4.TabIndex = 3;
@@ -98,7 +98,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(39, 236);
+            label5.Location = new Point(32, 218);
             label5.Name = "label5";
             label5.Size = new Size(71, 15);
             label5.TabIndex = 4;
@@ -108,7 +108,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(42, 280);
+            label6.Location = new Point(32, 266);
             label6.Name = "label6";
             label6.Size = new Size(45, 15);
             label6.TabIndex = 5;
@@ -118,7 +118,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(42, 324);
+            label7.Location = new Point(32, 313);
             label7.Name = "label7";
             label7.Size = new Size(62, 15);
             label7.TabIndex = 6;
@@ -128,7 +128,7 @@
             // 
             textBox1.BorderRadius = 30;
             textBox1.Cursor = Cursors.No;
-            textBox1.Location = new Point(55, 40);
+            textBox1.Location = new Point(55, 21);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(209, 23);
             textBox1.TabIndex = 7;
@@ -136,7 +136,7 @@
             // textBox2
             // 
             textBox2.BorderRadius = 20;
-            textBox2.Location = new Point(55, 184);
+            textBox2.Location = new Point(55, 165);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(209, 23);
             textBox2.TabIndex = 10;
@@ -144,7 +144,7 @@
             // textBox3
             // 
             textBox3.BorderRadius = 20;
-            textBox3.Location = new Point(55, 233);
+            textBox3.Location = new Point(55, 215);
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(209, 23);
             textBox3.TabIndex = 11;
@@ -155,7 +155,7 @@
             comboBox1.DrawMode = DrawMode.OwnerDrawFixed;
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(55, 133);
+            comboBox1.Location = new Point(55, 116);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(209, 24);
             comboBox1.TabIndex = 9;
@@ -166,7 +166,7 @@
             comboBox2.DrawMode = DrawMode.OwnerDrawFixed;
             comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(55, 277);
+            comboBox2.Location = new Point(55, 263);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(209, 24);
             comboBox2.TabIndex = 12;
@@ -177,14 +177,14 @@
             comboBox3.DrawMode = DrawMode.OwnerDrawFixed;
             comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox3.FormattingEnabled = true;
-            comboBox3.Location = new Point(55, 321);
+            comboBox3.Location = new Point(55, 310);
             comboBox3.Name = "comboBox3";
             comboBox3.Size = new Size(209, 24);
             comboBox3.TabIndex = 13;
             // 
             // dateTimePicker1
             // 
-            dateTimePicker1.Location = new Point(55, 85);
+            dateTimePicker1.Location = new Point(55, 68);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(209, 23);
             dateTimePicker1.TabIndex = 8;
@@ -208,7 +208,7 @@
             // 
             // splitContainer1
             // 
-            splitContainer1.Location = new Point(153, 31);
+            splitContainer1.Location = new Point(140, 24);
             splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -234,7 +234,7 @@
             splitContainer1.Panel2.Controls.Add(dateTimePicker1);
             splitContainer1.Panel2.Controls.Add(comboBox1);
             splitContainer1.Panel2.Controls.Add(textBox2);
-            splitContainer1.Size = new Size(510, 374);
+            splitContainer1.Size = new Size(510, 393);
             splitContainer1.SplitterDistance = 170;
             splitContainer1.TabIndex = 15;
             // 
@@ -242,7 +242,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(42, 354);
+            label8.Location = new Point(32, 354);
             label8.Name = "label8";
             label8.Size = new Size(39, 15);
             label8.TabIndex = 7;

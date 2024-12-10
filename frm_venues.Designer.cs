@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
-            button1 = new Button();
+            button1 = new RoundedButton();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -46,12 +46,18 @@
             // 
             // button1
             // 
+            button1.BackColor = Color.FromArgb(73, 54, 40);
+            button1.CornerRadius = 30;
+            button1.Cursor = Cursors.Hand;
+            button1.FlatStyle = FlatStyle.Popup;
+            button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.ForeColor = SystemColors.ButtonHighlight;
             button1.Location = new Point(673, 388);
             button1.Name = "button1";
-            button1.Size = new Size(75, 23);
+            button1.Size = new Size(84, 29);
             button1.TabIndex = 1;
             button1.Text = "Add Venue";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
             // frm_venues
@@ -72,6 +78,6 @@
         #endregion
 
         private DataGridView dataGridView1;
-        private Button button1;
+        private RoundedButton button1;
     }
 }

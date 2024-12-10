@@ -41,10 +41,13 @@ namespace Event_management
             // Store the reference to the existing AdminForm1
             this.Shown += Form5_Shown;
             this.FormClosed += Form5_FormClosed;
+            
         }
 
+      
 
-        public void reloadresources()
+
+            public void reloadresources()
         {
             string query = "\t\t \r\nSELECT r.ResourceName, r.Quantity, r.Cost, er.QuantityUsed\r\nFROM Resources r\r\nINNER JOIN Event_Resources er \r\n    ON r.ResourceID = er.ResourceID\r\nINNER JOIN Events e \r\n    ON er.EventID = e.EventID\r\nWHERE e.EventID = @EventID;";
             using (SqlConnection connection = new SqlConnection(Class1.connectionString))
@@ -284,13 +287,48 @@ namespace Event_management
 
         }
 
+
+
+
+
+        private void ApplyDataGridViewStyles(DataGridView dataGridView)
+        {
+            // Hide row headers
+            dataGridView.RowHeadersVisible = false;
+
+            // Disable visual styles for custom header styles
+            dataGridView.EnableHeadersVisualStyles = false;
+
+            // Customize column header style
+            dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(73, 54, 40); // RGB(73, 54, 40)
+            dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White; // White text
+            dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 9); // Bold font
+            dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // Apply alternate row coloring
+            dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(214, 192, 179); // RGB(214, 192, 179)
+            dataGridView.RowsDefaultCellStyle.BackColor = Color.FromArgb(228, 224, 225); // RGB(228, 224, 225)
+            dataGridView.RowsDefaultCellStyle.ForeColor = Color.Black; // Text color for consistency
+
+            // Center align text in rows
+            dataGridView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // Optional: Set a consistent row height
+            
+        }
+
+        // Call this method for both DataGridView1 and DataGridView2
         private void Form5_Load(object sender, EventArgs e)
         {
-
-
+            ApplyDataGridViewStyles(dataGridView1);
+            ApplyDataGridViewStyles(dataGridView2);
         }
+
+
         private void Form5_Shown(object sender, EventArgs e)
         {
+  
+
 
             LoadEventDetails();
             if (Class1.login_flag == 1)
@@ -669,7 +707,7 @@ namespace Event_management
 
             }
         }
-       
+
 
         private List<(string AttendeeName, string EventName, DateTime EventDate, string VenueName, string TicketID)> FetchTicketData(long eventId)
         {
@@ -713,10 +751,10 @@ namespace Event_management
             return ticketData;
         }
 
-      
 
 
-       
+
+
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -733,6 +771,21 @@ namespace Event_management
                     previewForm.ShowDialog(); // Show the form as a dialog
                 }
             }
+        }
+
+        private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

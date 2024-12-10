@@ -40,6 +40,8 @@ namespace Event_management
         {
             // Apply the custom renderer to the MainMenuStrip
             this.MainMenuStrip.Renderer = new RoundedToolStripRenderer();
+            
+            MainMenuStrip.Height = 200;
 
             // Your existing code for login and form display
             //if (Class1.login_flag == 2)
