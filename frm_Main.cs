@@ -140,12 +140,20 @@ namespace Event_management
 
         private void viewVenuesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
             frm_venues venues = new frm_venues();
             venues.MdiParent = this;
             venues.Show();
             adminForm.Close();
 
+        }
+
+        private void eventSummaryReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EventSummaryReportForm form = new EventSummaryReportForm();    
+            form.MdiParent = this;
+            form.Show();
+            adminForm.Close();
         }
     }
 }
