@@ -32,10 +32,11 @@
             registerToolStripMenuItem = new ToolStripMenuItem();
             addOrganizerToolStripMenuItem = new ToolStripMenuItem();
             addOwnerToolStripMenuItem = new ToolStripMenuItem();
-            logOutToolStripMenuItem = new ToolStripMenuItem();
             addResourceToolStripMenuItem = new ToolStripMenuItem();
             addVenueToolStripMenuItem = new ToolStripMenuItem();
             viewVenuesToolStripMenuItem = new ToolStripMenuItem();
+            logOutToolStripMenuItem = new ToolStripMenuItem();
+            addResourceToolStripMenuItem1 = new ToolStripMenuItem();
             toolStrip1 = new ToolStrip();
             toolStripLabel1 = new ToolStripLabel();
             toolStripLabel2 = new ToolStripLabel();
@@ -47,7 +48,7 @@
             // 
             Mainmenu.BackColor = Color.FromArgb(171, 136, 109);
             Mainmenu.Dock = DockStyle.Left;
-            Mainmenu.Items.AddRange(new ToolStripItem[] { registerToolStripMenuItem, addOrganizerToolStripMenuItem, addOwnerToolStripMenuItem, addResourceToolStripMenuItem, addVenueToolStripMenuItem, viewVenuesToolStripMenuItem, logOutToolStripMenuItem });
+            Mainmenu.Items.AddRange(new ToolStripItem[] { registerToolStripMenuItem, addOrganizerToolStripMenuItem, addOwnerToolStripMenuItem, addResourceToolStripMenuItem, addVenueToolStripMenuItem, viewVenuesToolStripMenuItem, logOutToolStripMenuItem, addResourceToolStripMenuItem1 });
             Mainmenu.Location = new Point(0, 0);
             Mainmenu.Name = "Mainmenu";
             Mainmenu.Size = new Size(126, 450);
@@ -81,15 +82,6 @@
             addOwnerToolStripMenuItem.Text = "Add Owner";
             addOwnerToolStripMenuItem.Click += addOwnerToolStripMenuItem_Click;
             // 
-            // logOutToolStripMenuItem
-            // 
-            logOutToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
-            logOutToolStripMenuItem.ForeColor = Color.White;
-            logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            logOutToolStripMenuItem.Size = new Size(113, 19);
-            logOutToolStripMenuItem.Text = "LogOut";
-            logOutToolStripMenuItem.Click += logOutToolStripMenuItem_Click;
-            // 
             // addResourceToolStripMenuItem
             // 
             addResourceToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
@@ -117,6 +109,25 @@
             viewVenuesToolStripMenuItem.Size = new Size(113, 19);
             viewVenuesToolStripMenuItem.Text = "View Venues";
             viewVenuesToolStripMenuItem.Click += viewVenuesToolStripMenuItem_Click;
+            // 
+            // logOutToolStripMenuItem
+            // 
+            logOutToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
+            logOutToolStripMenuItem.ForeColor = Color.White;
+            logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
+            logOutToolStripMenuItem.Size = new Size(113, 19);
+            logOutToolStripMenuItem.Text = "LogOut";
+            logOutToolStripMenuItem.Click += logOutToolStripMenuItem_Click;
+            // 
+            // addResourceToolStripMenuItem1
+            // 
+            addResourceToolStripMenuItem1.BackColor = Color.FromArgb(73, 54, 40);
+            addResourceToolStripMenuItem1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            addResourceToolStripMenuItem1.ForeColor = Color.White;
+            addResourceToolStripMenuItem1.Name = "addResourceToolStripMenuItem1";
+            addResourceToolStripMenuItem1.Size = new Size(113, 19);
+            addResourceToolStripMenuItem1.Text = "Add Resource";
+            addResourceToolStripMenuItem1.Click += addResourceToolStripMenuItem1_Click;
             // 
             // toolStrip1
             // 
@@ -180,5 +191,6 @@
         private ToolStripMenuItem addResourceToolStripMenuItem;
         private ToolStripMenuItem addVenueToolStripMenuItem;
         private ToolStripMenuItem viewVenuesToolStripMenuItem;
+        private ToolStripMenuItem addResourceToolStripMenuItem1;
     }
 }

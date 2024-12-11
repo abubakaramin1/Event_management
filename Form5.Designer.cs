@@ -51,6 +51,7 @@
             button3 = new RoundedButton();
             splitContainer1 = new SplitContainer();
             splitContainer2 = new SplitContainer();
+            button4 = new RoundedButton();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -331,12 +332,28 @@
             splitContainer2.TabIndex = 24;
             splitContainer2.SplitterMoved += splitContainer2_SplitterMoved;
             // 
+            // button4
+            // 
+            button4.BackColor = Color.FromArgb(73, 54, 40);
+            button4.CornerRadius = 30;
+            button4.Cursor = Cursors.Hand;
+            button4.FlatStyle = FlatStyle.Popup;
+            button4.ForeColor = SystemColors.ButtonHighlight;
+            button4.Location = new Point(392, 342);
+            button4.Name = "button4";
+            button4.Size = new Size(37, 31);
+            button4.TabIndex = 25;
+            button4.Text = "-";
+            button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
+            // 
             // Form5
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(228, 224, 225);
             ClientSize = new Size(1204, 659);
+            Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(buttonSave);
@@ -347,6 +364,7 @@
             Controls.Add(dataGridView1);
             Controls.Add(splitContainer1);
             Controls.Add(splitContainer2);
+            Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Name = "Form5";
             Text = "Form5";
             WindowState = FormWindowState.Maximized;
@@ -395,5 +413,6 @@
         private RoundedButton buttonSave;
         private RoundedButton button2;
         private RoundedButton button3;
+        private RoundedButton button4;
     }
 }

@@ -40,7 +40,7 @@ namespace Event_management
         {
             // Apply the custom renderer to the MainMenuStrip
             this.MainMenuStrip.Renderer = new RoundedToolStripRenderer();
-            
+
             MainMenuStrip.Height = 200;
 
             // Your existing code for login and form display
@@ -142,12 +142,20 @@ namespace Event_management
 
         private void viewVenuesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
             frm_venues venues = new frm_venues();
             venues.MdiParent = this;
             venues.Show();
             adminForm.Close();
 
+        }
+
+        private void addResourceToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AddResources form = new AddResources();
+            form.MdiParent = this;
+            form.Show();
+            adminForm.Close();
         }
     }
 }

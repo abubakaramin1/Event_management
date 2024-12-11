@@ -41,13 +41,13 @@ namespace Event_management
             // Store the reference to the existing AdminForm1
             this.Shown += Form5_Shown;
             this.FormClosed += Form5_FormClosed;
-            
+
         }
 
-      
 
 
-            public void reloadresources()
+
+        public void reloadresources()
         {
             string query = "\t\t \r\nSELECT r.ResourceName, r.Quantity, r.Cost, er.QuantityUsed\r\nFROM Resources r\r\nINNER JOIN Event_Resources er \r\n    ON r.ResourceID = er.ResourceID\r\nINNER JOIN Events e \r\n    ON er.EventID = e.EventID\r\nWHERE e.EventID = @EventID;";
             using (SqlConnection connection = new SqlConnection(Class1.connectionString))
@@ -314,7 +314,7 @@ namespace Event_management
             dataGridView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             // Optional: Set a consistent row height
-            
+
         }
 
         // Call this method for both DataGridView1 and DataGridView2
@@ -327,7 +327,7 @@ namespace Event_management
 
         private void Form5_Shown(object sender, EventArgs e)
         {
-  
+
 
 
             LoadEventDetails();
@@ -708,6 +708,32 @@ namespace Event_management
             }
         }
 
+        public static string ShowInputBox(string prompt, string title)
+        {
+            Form inputForm = new Form();
+            inputForm.Text = title;
+
+            System.Windows.Forms.TextBox txtInput = new System.Windows.Forms.TextBox { Left = 10, Top = 10, Width = 200 };
+            System.Windows.Forms.Button btnOK = new System.Windows.Forms.Button { Text = "OK", Left = 10, Top = 40 };
+
+            btnOK.Click += (sender, e) =>
+            {
+                inputForm.DialogResult = DialogResult.OK;
+                inputForm.Close();
+            };
+
+            inputForm.ClientSize = new System.Drawing.Size(230, 80);
+            inputForm.Controls.AddRange(new Control[] { txtInput, btnOK });
+            inputForm.AcceptButton = btnOK;
+            inputForm.StartPosition = FormStartPosition.CenterParent;
+            inputForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+
+            if (inputForm.ShowDialog() == DialogResult.OK)
+                return txtInput.Text;
+
+            return null;
+        }
+
 
         private List<(string AttendeeName, string EventName, DateTime EventDate, string VenueName, string TicketID)> FetchTicketData(long eventId)
         {
@@ -787,6 +813,14 @@ namespace Event_management
         {
 
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SubtractResources form = new SubtractResources(this,eventId);
+            form.Show();
+
+        }
+
     }
 }
 
