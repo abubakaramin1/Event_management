@@ -133,6 +133,7 @@
             Controls.Add(dataGridView1);
             Name = "EventSummaryReportForm";
             Text = "EventSummaryReportForm";
+            FormClosed += EventSummaryReportForm_FormClosed;
             Load += EventSummaryReportForm_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

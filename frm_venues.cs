@@ -45,7 +45,7 @@ namespace Event_management
 
         }
 
-            private void frm_venues_Load(object sender, EventArgs e)
+        private void frm_venues_Load(object sender, EventArgs e)
         {
 
             showvenues();
@@ -73,9 +73,11 @@ namespace Event_management
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Class1.venue_flag = 1;
             AddVenue addVenue = new AddVenue(this);
-            addVenue.Show();
+            addVenue.ShowDialog();
         }
+
+       
     }
+
 }

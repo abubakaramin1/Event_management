@@ -179,11 +179,12 @@ namespace Event_management
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+
             if (e.RowIndex >= 0)
             {
                 long eventId = Convert.ToInt64(dataGridView1.Rows[e.RowIndex].Cells["EventID"].Value);
 
-
+                Class1.organizer_flag = 2;
                 Form5 form5 = new Form5(eventId);
                 form5.MdiParent = this.MdiParent;
                 form5.Show();

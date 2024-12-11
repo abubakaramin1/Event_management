@@ -29,23 +29,47 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
+            button1 = new Button();
+            button2 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(183, 75);
+            dataGridView1.Location = new Point(232, 106);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(298, 182);
             dataGridView1.TabIndex = 1;
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
             // 
+            // button1
+            // 
+            button1.Location = new Point(744, 470);
+            button1.Name = "button1";
+            button1.Size = new Size(120, 23);
+            button1.TabIndex = 2;
+            button1.Text = "Add Resource";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(584, 477);
+            button2.Name = "button2";
+            button2.Size = new Size(130, 23);
+            button2.TabIndex = 3;
+            button2.Text = "Add Resource Type";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // updateResources
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(907, 526);
+            Controls.Add(button2);
+            Controls.Add(button1);
             Controls.Add(dataGridView1);
             Name = "updateResources";
             Text = "updateResources";
@@ -57,5 +81,7 @@
 
         #endregion
         private DataGridView dataGridView1;
+        private Button button1;
+        private Button button2;
     }
 }

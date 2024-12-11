@@ -115,8 +115,26 @@ namespace Event_management
         private void addOrganizerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Class1.add_flag = 2;
-            frm_registerowner frm_Registerowner = new frm_registerowner();
-            frm_Registerowner.ShowDialog();
+
+            if (Class1.organizer_flag == 2)
+            {
+                Form form = new adminForm1();
+                foreach (Form child in this.MdiChildren)
+                {
+                    if (child.Text == "Form5")
+                        form = child;
+                }
+                frm_registerowner _Registerowner = new frm_registerowner(form);
+                _Registerowner.ShowDialog();
+
+            }
+            else if (Class1.organizer_flag == 1)
+            {
+                frm_registerowner frm_Registerowner = new frm_registerowner();
+                frm_Registerowner.ShowDialog();
+            }
+
+
         }
 
         private void addOwnerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -134,11 +152,7 @@ namespace Event_management
             adminForm.Close();
         }
 
-        private void addVenueToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AddVenue addVenue = new AddVenue();
-            addVenue.ShowDialog();
-        }
+       
 
         private void viewVenuesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -150,18 +164,13 @@ namespace Event_management
 
         }
 
-        private void addResourceToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            AddResources form = new AddResources();
-            form.MdiParent = this;
-            form.Show();
-            adminForm.Close();
-        }
+      
 
  
 
         private void eventSummaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             EventSummaryReportForm form = new EventSummaryReportForm();
             form.MdiParent = this;
             form.Show();

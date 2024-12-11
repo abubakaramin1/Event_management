@@ -15,8 +15,36 @@ namespace Event_management
         public static string connectionString = "Data Source=(local);Initial Catalog=event_management;Integrated Security=True;TrustServerCertificate=True";
         public static int login_flag;
         public static int add_flag;
-        public static int venue_flag;
+        public static int organizer_flag = 1;
+        public static ComboBox comboBoxOrganizerName;
 
+
+        public static void showorganizers(ComboBox comboBox)
+        {
+            try
+            {
+                string query = "select FullName from UserLoginInfo\r\nwhere CatUserRoleId = 2";
+
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    comboBox.Items.Clear();
+
+                    while (reader.Read())
+                    {
+                        comboBox.Items.Add(reader["FullName"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading organizer names: {ex.Message}");
+            }
+        }
 
         public static DataTable loadvenues()
         {

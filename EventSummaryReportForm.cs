@@ -19,13 +19,13 @@ namespace Event_management
         DateTime? endDate = null;
         long? organizerId = null;
         int? venueId = null;
-        long? ownerId = null;   
+        long? ownerId = null;
 
 
         public EventSummaryReportForm()
         {
             InitializeComponent();
-            LoadEventSummaryReport(startDate,endDate,organizerId,venueId,ownerId);
+            LoadEventSummaryReport(startDate, endDate, organizerId, venueId, ownerId);
             LoadEventSummaryAggregates(startDate, endDate, organizerId, venueId, ownerId);
             InitializeDataGridView();
             LoadOrganizers();
@@ -102,7 +102,7 @@ namespace Event_management
         }
 
 
-        private void LoadEventSummaryReport(DateTime? startDate, DateTime? endDate, long? organizerId,int? venueId, long? ownerId)
+        private void LoadEventSummaryReport(DateTime? startDate, DateTime? endDate, long? organizerId, int? venueId, long? ownerId)
         {
             try
             {
@@ -172,19 +172,19 @@ namespace Event_management
 
         private void btnShowResults_Click(object sender, EventArgs e)
         {
-             startDate = dateTimePickerStartDate.Checked ? dateTimePickerStartDate.Value.Date : (DateTime?)null;
-             endDate = dateTimePickerEndDate.Checked ? dateTimePickerEndDate.Value.Date : (DateTime?)null;
+            startDate = dateTimePickerStartDate.Checked ? dateTimePickerStartDate.Value.Date : (DateTime?)null;
+            endDate = dateTimePickerEndDate.Checked ? dateTimePickerEndDate.Value.Date : (DateTime?)null;
             organizerId = comboBoxOrganizers.SelectedValue != DBNull.Value
                    ? (long?)comboBoxOrganizers.SelectedValue
                    : null;
 
-             venueId = comboBoxVenues.SelectedValue != DBNull.Value
-                            ? (int?)comboBoxVenues.SelectedValue
-                            : null;
+            venueId = comboBoxVenues.SelectedValue != DBNull.Value
+                           ? (int?)comboBoxVenues.SelectedValue
+                           : null;
 
-           ownerId = comboBoxOwners.SelectedValue != DBNull.Value
-                            ? (long?)comboBoxOwners.SelectedValue
-                            : null;
+            ownerId = comboBoxOwners.SelectedValue != DBNull.Value
+                             ? (long?)comboBoxOwners.SelectedValue
+                             : null;
 
             LoadEventSummaryReport(startDate, endDate, organizerId, venueId, ownerId);
 
@@ -257,5 +257,11 @@ namespace Event_management
             }
         }
 
+        private void EventSummaryReportForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+           adminForm1 admin = new adminForm1();
+            admin.MdiParent = this.MdiParent;
+            admin.Show();
+        }
     }
 }

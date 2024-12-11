@@ -24,7 +24,7 @@ namespace Event_management
     {
         new ComboBoxItem { Text = "Admin", Id = 1 },
         new ComboBoxItem { Text = "Event Organizer", Id = 2 },
-        new ComboBoxItem { Text = "Event Owner", Id = 3 },
+        new ComboBoxItem { Text = "Event Owne   r", Id = 3 },
 
     };
 
@@ -136,6 +136,9 @@ namespace Event_management
     public class ComboBoxItem
     {
         public int Id { get; set; }
+
+        public long resourceid {  get; set; }
+
         public string Text { get; set; }
 
         public override string ToString()

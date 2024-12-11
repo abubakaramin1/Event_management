@@ -36,7 +36,7 @@ namespace Event_management
             CenterDataGridView(dataGridView1);
         }
 
-       
+
 
         private void ApplyDataGridViewStyles(DataGridView dataGridView)
         {
@@ -64,7 +64,7 @@ namespace Event_management
 
         }
 
-        private void loadresources()
+        public void loadresources()
         {
             try
             {
@@ -114,6 +114,87 @@ namespace Event_management
             adminForm1 admin = new adminForm1();
             admin.MdiParent = this.MdiParent;
             admin.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AddResources form = new AddResources(this);
+            form.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Prompt the user for the resource type title
+            string input = Prompt.ShowDialog("Enter Resource Type", "Add Resource Type");
+
+            // Check if input is valid
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                MessageBox.Show("Resource type cannot be empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                // SQL query to insert the resource type into the CatResourceType table
+                string query = "INSERT INTO CatResourceType (Title) VALUES (@Title)";
+
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Title", input);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Resource type added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to add the resource type. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while adding the resource type: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+    }
+    public static class Prompt
+    {
+        public static string ShowDialog(string text, string caption)
+        {
+            Form prompt = new Form()
+            {
+                Width = 400,
+                Height = 200,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                Text = caption,
+                StartPosition = FormStartPosition.CenterScreen
+            };
+
+            Label label = new Label() { Left = 20, Top = 20, Text = text, Width = 350 };
+            TextBox textBox = new TextBox() { Left = 20, Top = 50, Width = 350 };
+            Button confirmation = new Button() { Text = "OK", Left = 250, Width = 100, Top = 100, DialogResult = DialogResult.OK };
+            Button cancel = new Button() { Text = "Cancel", Left = 140, Width = 100, Top = 100, DialogResult = DialogResult.Cancel };
+
+            prompt.Controls.Add(label);
+            prompt.Controls.Add(textBox);
+            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(cancel);
+            prompt.AcceptButton = confirmation;
+            prompt.CancelButton = cancel;
+
+            DialogResult result = prompt.ShowDialog();
+
+            return result == DialogResult.OK ? textBox.Text.Trim() : null;
         }
     }
 }

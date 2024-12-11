@@ -15,10 +15,18 @@ namespace Event_management
     {
         int catuserrole = 0;
         string query = null;
+        Form5 form5;
+
         public frm_registerowner()
         {
             InitializeComponent();
         }
+        public frm_registerowner(Form form)
+        {
+            InitializeComponent();
+            this.form5 = (Form5)form;
+        }
+
 
         private void frm_registerowner_Load(object sender, EventArgs e)
         {
@@ -62,6 +70,11 @@ namespace Event_management
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("User added successfully!");
+                            if(Class1.add_flag == 2 && Class1.organizer_flag == 2)
+                            {
+                                form5.LoadOrganizerNames();
+
+                            }
                             this.Close();
                         }
                         else

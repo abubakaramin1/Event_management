@@ -92,10 +92,9 @@ namespace Event_management
 
         private void AddVenue_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (Class1.venue_flag == 1)
-            {
+            
                 frm_Venues.showvenues();
-            }
+            
         }
 
         private void AddVenue_Load(object sender, EventArgs e)

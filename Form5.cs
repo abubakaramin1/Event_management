@@ -109,6 +109,8 @@ namespace Event_management
             }
         }
 
+        
+
         public void LoadEventDetails()
         {
             try
@@ -389,6 +391,7 @@ namespace Event_management
 
         private void Form5_FormClosed(object sender, FormClosedEventArgs e)
         {
+            Class1.organizer_flag = 1;
             adminForm1 adminForm = new adminForm1();
             adminForm.MdiParent = this.MdiParent;
             adminForm.Show();
@@ -510,34 +513,9 @@ namespace Event_management
 
 
 
-        private void LoadOrganizerNames()
+        public void LoadOrganizerNames()
         {
-            try
-            {
-                // Define query to fetch organizer names
-                string query = "select FullName from UserLoginInfo\r\nwhere CatUserRoleId = 2";
-
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
-
-                    SqlCommand cmd = new SqlCommand(query, connection);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    // Clear any existing items in the ComboBox
-                    comboBoxOrganizer.Items.Clear();
-
-                    // Populate the ComboBox with organizer names
-                    while (reader.Read())
-                    {
-                        comboBoxOrganizer.Items.Add(reader["FullName"].ToString());
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading organizer names: {ex.Message}");
-            }
+            Class1.showorganizers(comboBoxOrganizer);
         }
 
         private void LoadVenues()
@@ -817,7 +795,7 @@ namespace Event_management
         private void button4_Click(object sender, EventArgs e)
         {
             SubtractResources form = new SubtractResources(this,eventId);
-            form.Show();
+            form.ShowDialog();
 
         }
 

@@ -37,11 +37,11 @@
             viewVenuesToolStripMenuItem = new ToolStripMenuItem();
             logOutToolStripMenuItem = new ToolStripMenuItem();
             addResourceToolStripMenuItem1 = new ToolStripMenuItem();
+            eventSummaryToolStripMenuItem = new ToolStripMenuItem();
             toolStrip1 = new ToolStrip();
             toolStripLabel1 = new ToolStripLabel();
             toolStripLabel2 = new ToolStripLabel();
             eventSummaryReportToolStripMenuItem = new ToolStripMenuItem();
-            eventSummaryToolStripMenuItem = new ToolStripMenuItem();
             Mainmenu.SuspendLayout();
             toolStrip1.SuspendLayout();
             SuspendLayout();
@@ -90,18 +90,13 @@
             addResourceToolStripMenuItem.ForeColor = Color.White;
             addResourceToolStripMenuItem.Name = "addResourceToolStripMenuItem";
             addResourceToolStripMenuItem.Size = new Size(113, 19);
-            addResourceToolStripMenuItem.Text = "View Resources";
+            addResourceToolStripMenuItem.Text = "Manage Resources";
             addResourceToolStripMenuItem.Click += addResourceToolStripMenuItem_Click;
             // 
             // addVenueToolStripMenuItem
             // 
-            addVenueToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
-            addVenueToolStripMenuItem.BackgroundImageLayout = ImageLayout.None;
-            addVenueToolStripMenuItem.ForeColor = Color.White;
             addVenueToolStripMenuItem.Name = "addVenueToolStripMenuItem";
-            addVenueToolStripMenuItem.Size = new Size(113, 19);
-            addVenueToolStripMenuItem.Text = "Add Venue";
-            addVenueToolStripMenuItem.Click += addVenueToolStripMenuItem_Click;
+            addVenueToolStripMenuItem.Size = new Size(113, 4);
             // 
             // viewVenuesToolStripMenuItem
             // 
@@ -109,7 +104,7 @@
             viewVenuesToolStripMenuItem.ForeColor = Color.White;
             viewVenuesToolStripMenuItem.Name = "viewVenuesToolStripMenuItem";
             viewVenuesToolStripMenuItem.Size = new Size(113, 19);
-            viewVenuesToolStripMenuItem.Text = "View Venues";
+            viewVenuesToolStripMenuItem.Text = "Manage Venues";
             viewVenuesToolStripMenuItem.Click += viewVenuesToolStripMenuItem_Click;
             // 
             // logOutToolStripMenuItem
@@ -123,13 +118,15 @@
             // 
             // addResourceToolStripMenuItem1
             // 
-            addResourceToolStripMenuItem1.BackColor = Color.FromArgb(73, 54, 40);
-            addResourceToolStripMenuItem1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            addResourceToolStripMenuItem1.ForeColor = Color.White;
             addResourceToolStripMenuItem1.Name = "addResourceToolStripMenuItem1";
-            addResourceToolStripMenuItem1.Size = new Size(113, 19);
-            addResourceToolStripMenuItem1.Text = "Add Resource";
-            addResourceToolStripMenuItem1.Click += addResourceToolStripMenuItem1_Click;
+            addResourceToolStripMenuItem1.Size = new Size(113, 4);
+            // 
+            // eventSummaryToolStripMenuItem
+            // 
+            eventSummaryToolStripMenuItem.Name = "eventSummaryToolStripMenuItem";
+            eventSummaryToolStripMenuItem.Size = new Size(113, 19);
+            eventSummaryToolStripMenuItem.Text = "Event Summary";
+            eventSummaryToolStripMenuItem.Click += eventSummaryToolStripMenuItem_Click;
             // 
             // toolStrip1
             // 
@@ -162,13 +159,6 @@
             eventSummaryReportToolStripMenuItem.Name = "eventSummaryReportToolStripMenuItem";
             eventSummaryReportToolStripMenuItem.Size = new Size(133, 19);
             eventSummaryReportToolStripMenuItem.Text = "Event Summary Report";
-            // 
-            // eventSummaryToolStripMenuItem
-            // 
-            eventSummaryToolStripMenuItem.Name = "eventSummaryToolStripMenuItem";
-            eventSummaryToolStripMenuItem.Size = new Size(113, 19);
-            eventSummaryToolStripMenuItem.Text = "Event Summary";
-            eventSummaryToolStripMenuItem.Click += eventSummaryToolStripMenuItem_Click;
             // 
             // frm_Main
             // 
