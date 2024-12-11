@@ -31,13 +31,12 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            label4 = new Label();
             label5 = new Label();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             textBox3 = new TextBox();
-            comboBox1 = new ComboBox();
             comboBox2 = new ComboBox();
+            confirmButton = new Button();
             SuspendLayout();
             // 
             // label1
@@ -70,21 +69,11 @@
             label3.TabIndex = 2;
             label3.Text = "Cost";
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(184, 273);
-            label4.Name = "label4";
-            label4.Size = new Size(47, 15);
-            label4.TabIndex = 3;
-            label4.Text = "Vendor";
-            // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(184, 340);
+            label5.Location = new Point(184, 284);
             label5.Name = "label5";
             label5.Size = new Size(88, 15);
             label5.TabIndex = 4;
@@ -111,35 +100,35 @@
             textBox3.Size = new Size(153, 23);
             textBox3.TabIndex = 7;
             // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(405, 270);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(153, 23);
-            comboBox1.TabIndex = 8;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            // 
             // comboBox2
             // 
             comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(405, 337);
+            comboBox2.Location = new Point(405, 281);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(153, 23);
             comboBox2.TabIndex = 9;
+            // 
+            // confirmButton
+            // 
+            confirmButton.Location = new Point(630, 375);
+            confirmButton.Name = "confirmButton";
+            confirmButton.Size = new Size(75, 23);
+            confirmButton.TabIndex = 10;
+            confirmButton.Text = "Confirm";
+            confirmButton.UseVisualStyleBackColor = true;
+            confirmButton.Click += confirmButton_Click;
             // 
             // AddResources
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(confirmButton);
             Controls.Add(comboBox2);
-            Controls.Add(comboBox1);
             Controls.Add(textBox3);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
             Controls.Add(label5);
-            Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -154,12 +143,11 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private Label label4;
         private Label label5;
         private TextBox textBox1;
         private TextBox textBox2;
         private TextBox textBox3;
-        private ComboBox comboBox1;
         private ComboBox comboBox2;
+        private Button confirmButton;
     }
 }
