@@ -19,10 +19,37 @@ namespace Event_management
             InitializeComponent();
         }
 
-        private void frm_venues_Load(object sender, EventArgs e)
+        private void ApplyDataGridViewStyles(DataGridView dataGridView)
+        {
+            // Hide row headers
+            dataGridView.RowHeadersVisible = false;
+
+            // Disable visual styles for custom header styles
+            dataGridView.EnableHeadersVisualStyles = false;
+
+            // Customize column header style
+            dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(73, 54, 40); // RGB(73, 54, 40)
+            dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White; // White text
+            dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 9); // Bold font
+            dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // Apply alternate row coloring
+            dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(214, 192, 179); // RGB(214, 192, 179)
+            dataGridView.RowsDefaultCellStyle.BackColor = Color.FromArgb(228, 224, 225); // RGB(228, 224, 225)
+            dataGridView.RowsDefaultCellStyle.ForeColor = Color.Black; // Text color for consistency
+
+            // Center align text in rows
+            dataGridView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // Optional: Set a consistent row height
+
+        }
+
+            private void frm_venues_Load(object sender, EventArgs e)
         {
 
             showvenues();
+            ApplyDataGridViewStyles(dataGridView1);
         }
 
         public void showvenues()

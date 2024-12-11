@@ -32,26 +32,28 @@
             registerToolStripMenuItem = new ToolStripMenuItem();
             addOrganizerToolStripMenuItem = new ToolStripMenuItem();
             addOwnerToolStripMenuItem = new ToolStripMenuItem();
-            logOutToolStripMenuItem = new ToolStripMenuItem();
             addResourceToolStripMenuItem = new ToolStripMenuItem();
             addVenueToolStripMenuItem = new ToolStripMenuItem();
             viewVenuesToolStripMenuItem = new ToolStripMenuItem();
+            logOutToolStripMenuItem = new ToolStripMenuItem();
+            addResourceToolStripMenuItem1 = new ToolStripMenuItem();
             toolStrip1 = new ToolStrip();
             toolStripLabel1 = new ToolStripLabel();
             toolStripLabel2 = new ToolStripLabel();
             eventSummaryReportToolStripMenuItem = new ToolStripMenuItem();
+            eventSummaryToolStripMenuItem = new ToolStripMenuItem();
             Mainmenu.SuspendLayout();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // Mainmenu
             // 
-            Mainmenu.BackColor = Color.FromArgb(228, 224, 225);
+            Mainmenu.BackColor = Color.FromArgb(171, 136, 109);
             Mainmenu.Dock = DockStyle.Left;
-            Mainmenu.Items.AddRange(new ToolStripItem[] { registerToolStripMenuItem, addOrganizerToolStripMenuItem, addOwnerToolStripMenuItem, logOutToolStripMenuItem, addResourceToolStripMenuItem, addVenueToolStripMenuItem, viewVenuesToolStripMenuItem, eventSummaryReportToolStripMenuItem });
+            Mainmenu.Items.AddRange(new ToolStripItem[] { registerToolStripMenuItem, addOrganizerToolStripMenuItem, addOwnerToolStripMenuItem, addResourceToolStripMenuItem, addVenueToolStripMenuItem, viewVenuesToolStripMenuItem, logOutToolStripMenuItem, addResourceToolStripMenuItem1, eventSummaryToolStripMenuItem });
             Mainmenu.Location = new Point(0, 0);
             Mainmenu.Name = "Mainmenu";
-            Mainmenu.Size = new Size(146, 450);
+            Mainmenu.Size = new Size(126, 450);
             Mainmenu.TabIndex = 1;
             Mainmenu.Text = "menuStrip1";
             // 
@@ -60,7 +62,7 @@
             registerToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
             registerToolStripMenuItem.ForeColor = Color.White;
             registerToolStripMenuItem.Name = "registerToolStripMenuItem";
-            registerToolStripMenuItem.Size = new Size(133, 19);
+            registerToolStripMenuItem.Size = new Size(113, 19);
             registerToolStripMenuItem.Text = "Add Event";
             registerToolStripMenuItem.Click += registerToolStripMenuItem_Click;
             // 
@@ -69,7 +71,7 @@
             addOrganizerToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
             addOrganizerToolStripMenuItem.ForeColor = Color.White;
             addOrganizerToolStripMenuItem.Name = "addOrganizerToolStripMenuItem";
-            addOrganizerToolStripMenuItem.Size = new Size(133, 19);
+            addOrganizerToolStripMenuItem.Size = new Size(113, 19);
             addOrganizerToolStripMenuItem.Text = "Add Organizer";
             addOrganizerToolStripMenuItem.Click += addOrganizerToolStripMenuItem_Click;
             // 
@@ -78,25 +80,16 @@
             addOwnerToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
             addOwnerToolStripMenuItem.ForeColor = Color.White;
             addOwnerToolStripMenuItem.Name = "addOwnerToolStripMenuItem";
-            addOwnerToolStripMenuItem.Size = new Size(133, 19);
+            addOwnerToolStripMenuItem.Size = new Size(113, 19);
             addOwnerToolStripMenuItem.Text = "Add Owner";
             addOwnerToolStripMenuItem.Click += addOwnerToolStripMenuItem_Click;
-            // 
-            // logOutToolStripMenuItem
-            // 
-            logOutToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
-            logOutToolStripMenuItem.ForeColor = Color.White;
-            logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            logOutToolStripMenuItem.Size = new Size(133, 19);
-            logOutToolStripMenuItem.Text = "LogOut";
-            logOutToolStripMenuItem.Click += logOutToolStripMenuItem_Click;
             // 
             // addResourceToolStripMenuItem
             // 
             addResourceToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
             addResourceToolStripMenuItem.ForeColor = Color.White;
             addResourceToolStripMenuItem.Name = "addResourceToolStripMenuItem";
-            addResourceToolStripMenuItem.Size = new Size(133, 19);
+            addResourceToolStripMenuItem.Size = new Size(113, 19);
             addResourceToolStripMenuItem.Text = "View Resources";
             addResourceToolStripMenuItem.Click += addResourceToolStripMenuItem_Click;
             // 
@@ -106,7 +99,7 @@
             addVenueToolStripMenuItem.BackgroundImageLayout = ImageLayout.None;
             addVenueToolStripMenuItem.ForeColor = Color.White;
             addVenueToolStripMenuItem.Name = "addVenueToolStripMenuItem";
-            addVenueToolStripMenuItem.Size = new Size(133, 19);
+            addVenueToolStripMenuItem.Size = new Size(113, 19);
             addVenueToolStripMenuItem.Text = "Add Venue";
             addVenueToolStripMenuItem.Click += addVenueToolStripMenuItem_Click;
             // 
@@ -115,18 +108,37 @@
             viewVenuesToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
             viewVenuesToolStripMenuItem.ForeColor = Color.White;
             viewVenuesToolStripMenuItem.Name = "viewVenuesToolStripMenuItem";
-            viewVenuesToolStripMenuItem.Size = new Size(133, 19);
+            viewVenuesToolStripMenuItem.Size = new Size(113, 19);
             viewVenuesToolStripMenuItem.Text = "View Venues";
             viewVenuesToolStripMenuItem.Click += viewVenuesToolStripMenuItem_Click;
             // 
+            // logOutToolStripMenuItem
+            // 
+            logOutToolStripMenuItem.BackColor = Color.FromArgb(73, 54, 40);
+            logOutToolStripMenuItem.ForeColor = Color.White;
+            logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
+            logOutToolStripMenuItem.Size = new Size(113, 19);
+            logOutToolStripMenuItem.Text = "LogOut";
+            logOutToolStripMenuItem.Click += logOutToolStripMenuItem_Click;
+            // 
+            // addResourceToolStripMenuItem1
+            // 
+            addResourceToolStripMenuItem1.BackColor = Color.FromArgb(73, 54, 40);
+            addResourceToolStripMenuItem1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            addResourceToolStripMenuItem1.ForeColor = Color.White;
+            addResourceToolStripMenuItem1.Name = "addResourceToolStripMenuItem1";
+            addResourceToolStripMenuItem1.Size = new Size(113, 19);
+            addResourceToolStripMenuItem1.Text = "Add Resource";
+            addResourceToolStripMenuItem1.Click += addResourceToolStripMenuItem1_Click;
+            // 
             // toolStrip1
             // 
-            toolStrip1.BackColor = Color.FromArgb(228, 224, 225);
+            toolStrip1.BackColor = Color.FromArgb(171, 136, 109);
             toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripLabel1, toolStripLabel2 });
             toolStrip1.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            toolStrip1.Location = new Point(146, 0);
+            toolStrip1.Location = new Point(126, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(678, 46);
+            toolStrip1.Size = new Size(698, 46);
             toolStrip1.Stretch = true;
             toolStrip1.TabIndex = 3;
             toolStrip1.Text = "toolStrip1";
@@ -150,7 +162,13 @@
             eventSummaryReportToolStripMenuItem.Name = "eventSummaryReportToolStripMenuItem";
             eventSummaryReportToolStripMenuItem.Size = new Size(133, 19);
             eventSummaryReportToolStripMenuItem.Text = "Event Summary Report";
-            eventSummaryReportToolStripMenuItem.Click += eventSummaryReportToolStripMenuItem_Click;
+            // 
+            // eventSummaryToolStripMenuItem
+            // 
+            eventSummaryToolStripMenuItem.Name = "eventSummaryToolStripMenuItem";
+            eventSummaryToolStripMenuItem.Size = new Size(113, 19);
+            eventSummaryToolStripMenuItem.Text = "Event Summary";
+            eventSummaryToolStripMenuItem.Click += eventSummaryToolStripMenuItem_Click;
             // 
             // frm_Main
             // 
@@ -188,6 +206,8 @@
         private ToolStripMenuItem addResourceToolStripMenuItem;
         private ToolStripMenuItem addVenueToolStripMenuItem;
         private ToolStripMenuItem viewVenuesToolStripMenuItem;
+        private ToolStripMenuItem addResourceToolStripMenuItem1;
         private ToolStripMenuItem eventSummaryReportToolStripMenuItem;
+        private ToolStripMenuItem eventSummaryToolStripMenuItem;
     }
 }

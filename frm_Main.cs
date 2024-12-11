@@ -41,6 +41,8 @@ namespace Event_management
             // Apply the custom renderer to the MainMenuStrip
             this.MainMenuStrip.Renderer = new RoundedToolStripRenderer();
 
+            MainMenuStrip.Height = 200;
+
             // Your existing code for login and form display
             //if (Class1.login_flag == 2)
             //{
@@ -148,9 +150,19 @@ namespace Event_management
 
         }
 
-        private void eventSummaryReportToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addResourceToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            EventSummaryReportForm form = new EventSummaryReportForm();    
+            AddResources form = new AddResources();
+            form.MdiParent = this;
+            form.Show();
+            adminForm.Close();
+        }
+
+ 
+
+        private void eventSummaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EventSummaryReportForm form = new EventSummaryReportForm();
             form.MdiParent = this;
             form.Show();
             adminForm.Close();
