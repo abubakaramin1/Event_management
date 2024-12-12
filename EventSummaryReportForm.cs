@@ -82,17 +82,24 @@ namespace Event_management
                         };
                         command.Parameters.Add(totalActualCostParam);
 
+                        SqlParameter totalProfitAmountParam = new SqlParameter("@TotalProfitAmount", SqlDbType.Decimal)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(totalProfitAmountParam);
+
                         // Execute the procedure
                         command.ExecuteNonQuery();
 
                         // Retrieve the output values
                         long totalEvents = (long)totalEventsParam.Value;
                         decimal totalActualCost = totalActualCostParam.Value != DBNull.Value ? (decimal)totalActualCostParam.Value : 0;
+                        decimal totalProfitAmount = totalProfitAmountParam.Value != DBNull.Value ? (decimal)totalProfitAmountParam.Value : 0;
 
                         // Update the labels or UI elements
                         lblTotalEvents.Text = $"Total Events: {totalEvents}";
                         lblTotalActualCost.Text = $"Total Actual Cost: {totalActualCost:C}";
-                    }
+                        lblTotalProfitAmount.Text = $"Total Profit Amount: {totalProfitAmount:C}";                     }
                 }
             }
             catch (Exception ex)
@@ -100,6 +107,7 @@ namespace Event_management
                 MessageBox.Show($"An error occurred while loading aggregates: {ex.Message}");
             }
         }
+
 
 
         private void LoadEventSummaryReport(DateTime? startDate, DateTime? endDate, long? organizerId, int? venueId, long? ownerId)
@@ -259,9 +267,11 @@ namespace Event_management
 
         private void EventSummaryReportForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-           adminForm1 admin = new adminForm1();
+            adminForm1 admin = new adminForm1();
             admin.MdiParent = this.MdiParent;
             admin.Show();
         }
+
+        
     }
 }

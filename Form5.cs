@@ -89,6 +89,8 @@ namespace Event_management
         public void reloadcost()
         {
             string actualQuery = "SELECT ActualCost FROM Events WHERE EventID = @EventID";
+            string profitamountQuery = "SELECT ProfitAmount FROM Events WHERE EventID = @EventID";
+
             using (SqlConnection connection = new SqlConnection(Class1.connectionString))
             {
                 connection.Open();
@@ -106,7 +108,27 @@ namespace Event_management
                 {
                     textBox3.Text = "Cost: Not Available";
                 }
+
             }
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            {
+                connection.Open();
+
+                // Profit Query
+                SqlCommand cmd = new SqlCommand(profitamountQuery, connection);
+                cmd.Parameters.AddWithValue("@EventID", eventId);
+                var result = cmd.ExecuteScalar();
+
+                if (result != null)
+                {
+                    textBox4.Text = result.ToString();
+                }
+                else
+                {
+                    textBox4.Text = "Profit amount : Not Available";
+                }
+            }
+
         }
 
         
@@ -123,6 +145,8 @@ namespace Event_management
                 string dateQuery = "SELECT EventDate FROM Events WHERE EventID = @EventID";
                 string venueQuery = "SELECT VenueName FROM Venues WHERE VenueID = (SELECT VenueID FROM Events WHERE EventID = @EventID)";
                 string profitQuery = "SELECT ProfitPercentage FROM Events WHERE EventID = @EventID";
+                string profitamountQuery = "SELECT ProfitAmount FROM Events WHERE EventID = @EventID";
+
                 string query = "\t\t \r\nSELECT r.ResourceName, r.Quantity, r.Cost, er.QuantityUsed\r\nFROM Resources r\r\nINNER JOIN Event_Resources er \r\n    ON r.ResourceID = er.ResourceID\r\nINNER JOIN Events e \r\n    ON er.EventID = e.EventID\r\nWHERE e.EventID = @EventID;";
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
@@ -271,6 +295,24 @@ namespace Event_management
                         textBoxProfit.Text = "Profit: Not Available";
                     }
                 }
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+
+                    // Profit Query
+                    SqlCommand cmd = new SqlCommand(profitamountQuery, connection);
+                    cmd.Parameters.AddWithValue("@EventID", eventId);
+                    var result = cmd.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        textBox4.Text = result.ToString();
+                    }
+                    else
+                    {
+                        textBox4.Text = "Profit amount: Not Available";
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -331,6 +373,7 @@ namespace Event_management
         {
 
 
+            Class1.CalculateEventCost(eventId);
 
             LoadEventDetails();
             if (Class1.login_flag == 1)

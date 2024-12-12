@@ -126,7 +126,12 @@ namespace Event_management
             decimal Budget = decimal.Parse(textBox2.Text);
             string Description = textBox3.Text;
             int OwnerID = ((ComboBoxItem)comboBox2.SelectedItem).Id;
-            decimal ProfitPercentage = decimal.Parse(roundedTextBox1.Text); 
+            String text = roundedTextBox1.Text;
+            if (text.EndsWith("%"))
+            {
+                text = text.TrimEnd('%');
+            }
+            decimal ProfitPercentage = decimal.Parse(text); 
 
             if (Class1.login_flag == 1)
             {

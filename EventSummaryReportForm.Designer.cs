@@ -37,6 +37,7 @@
             comboBoxOwners = new ComboBox();
             lblTotalEvents = new Label();
             lblTotalActualCost = new Label();
+            lblTotalProfitAmount = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -111,17 +112,27 @@
             // lblTotalActualCost
             // 
             lblTotalActualCost.AutoSize = true;
-            lblTotalActualCost.Location = new Point(200, 489);
+            lblTotalActualCost.Location = new Point(353, 489);
             lblTotalActualCost.Name = "lblTotalActualCost";
             lblTotalActualCost.Size = new Size(59, 15);
             lblTotalActualCost.TabIndex = 8;
             lblTotalActualCost.Text = "Total Cost";
+            // 
+            // lblTotalProfitAmount
+            // 
+            lblTotalProfitAmount.AutoSize = true;
+            lblTotalProfitAmount.Location = new Point(650, 489);
+            lblTotalProfitAmount.Name = "lblTotalProfitAmount";
+            lblTotalProfitAmount.Size = new Size(38, 15);
+            lblTotalProfitAmount.TabIndex = 9;
+            lblTotalProfitAmount.Text = "label1";
             // 
             // EventSummaryReportForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(932, 532);
+            Controls.Add(lblTotalProfitAmount);
             Controls.Add(lblTotalActualCost);
             Controls.Add(lblTotalEvents);
             Controls.Add(comboBoxOwners);
@@ -151,5 +162,6 @@
         private ComboBox comboBoxOwners;
         private Label lblTotalEvents;
         private Label lblTotalActualCost;
+        private Label lblTotalProfitAmount;
     }
 }

@@ -52,6 +52,8 @@
             splitContainer1 = new SplitContainer();
             splitContainer2 = new SplitContainer();
             button4 = new RoundedButton();
+            label9 = new Label();
+            textBox4 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -257,11 +259,11 @@
             label8.AutoSize = true;
             label8.BackColor = Color.FromArgb(214, 192, 179);
             label8.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(51, 149);
+            label8.Location = new Point(22, 154);
             label8.Name = "label8";
-            label8.Size = new Size(39, 15);
+            label8.Size = new Size(106, 15);
             label8.TabIndex = 20;
-            label8.Text = "Profit";
+            label8.Text = "Profit Percentage";
             // 
             // textBoxProfit
             // 
@@ -347,12 +349,30 @@
             button4.UseVisualStyleBackColor = false;
             button4.Click += button4_Click;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(753, 313);
+            label9.Name = "label9";
+            label9.Size = new Size(39, 15);
+            label9.TabIndex = 26;
+            label9.Text = "Profit";
+            // 
+            // textBox4
+            // 
+            textBox4.Location = new Point(912, 305);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(186, 23);
+            textBox4.TabIndex = 27;
+            // 
             // Form5
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(228, 224, 225);
             ClientSize = new Size(1204, 659);
+            Controls.Add(textBox4);
+            Controls.Add(label9);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
@@ -414,5 +434,7 @@
         private RoundedButton button2;
         private RoundedButton button3;
         private RoundedButton button4;
+        private Label label9;
+        private TextBox textBox4;
     }
 }

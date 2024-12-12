@@ -78,6 +78,8 @@ namespace Event_management
 
                     long userId = (long)reader["Id"];
                     Class1.organizerID = userId;
+                    string name = (string)reader["FullName"];
+                    Class1.name = name;
                     
                     
                     if (numericValue == 2)

@@ -16,8 +16,7 @@ namespace Event_management
         public static int login_flag;
         public static int add_flag;
         public static int organizer_flag = 1;
-        public static ComboBox comboBoxOrganizerName;
-
+        public static string name;
 
         public static void showorganizers(ComboBox comboBox)
         {
@@ -169,10 +168,12 @@ namespace Event_management
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
-                    string updateCostQuery = "UPDATE Events SET ActualCost = @ActualCost WHERE EventID = @EventID";
+                    string updateCostQuery = "UPDATE Events SET ActualCost = @ActualCost , ProfitAmount = @ProfitAmount\r\n WHERE EventID = @EventID";
                     SqlCommand cmd = new SqlCommand(updateCostQuery, connection);
                     cmd.Parameters.AddWithValue("@ActualCost", finalCost);
                     cmd.Parameters.AddWithValue("@EventID", eventId);
+                    cmd.Parameters.AddWithValue("@ProfitAmount", profit);
+
 
                     int rowsAffected = cmd.ExecuteNonQuery();
 

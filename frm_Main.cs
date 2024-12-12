@@ -56,6 +56,7 @@ namespace Event_management
 
             adminForm.MdiParent = this;
             adminForm.Show();
+            toolStripLabel2.Text = "Hello " + Class1.name;
             //}
 
             toolStripLabel1.Margin = new Padding(300, 0, 20, 0);
