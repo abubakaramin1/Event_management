@@ -24,7 +24,7 @@ namespace Event_management
     {
         new ComboBoxItem { Text = "Admin", Id = 1 },
         new ComboBoxItem { Text = "Event Organizer", Id = 2 },
-        new ComboBoxItem { Text = "Event Owne   r", Id = 3 },
+        new ComboBoxItem { Text = "Event Owner", Id = 3 },
 
     };
 
@@ -130,8 +130,8 @@ namespace Event_management
         private void Form1_Load(object sender, EventArgs e)
         {
             PopulateComboBox();
-            //this.StartPosition = FormStartPosition.CenterScreen;
-            //this.WindowState = FormWindowState.Maximized;
+            Class1.UpdateEventStatuses();
+
         }
     }
 

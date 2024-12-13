@@ -133,12 +133,11 @@ namespace Event_management
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        decimal resourceCost = reader.GetDecimal(0);  // Cost * Quantity
+                        decimal resourceCost = reader.GetDecimal(0);  
                         totalResourceCost += resourceCost;
                     }
                 }
 
-                // Get profit percentage for the event
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
@@ -158,7 +157,6 @@ namespace Event_management
                     }
                 }
 
-                // Calculate total cost
                 decimal totalEventCost = venueCost + totalResourceCost;
                 decimal profit = totalEventCost * profitPercentage;
                 decimal finalCost = totalEventCost + profit;
@@ -193,6 +191,29 @@ namespace Event_management
                 MessageBox.Show($"Error calculating event cost: {ex.Message}");
             }
         }
+
+        public static void UpdateEventStatuses()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand("UpdateEventStatuses", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                   command.ExecuteNonQuery();
+
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while updating event statuses: {ex.Message}");
+            }
+        }
+
 
 
 

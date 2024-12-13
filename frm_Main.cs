@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Event_management
 {
@@ -22,6 +23,8 @@ namespace Event_management
         {
             InitializeComponent();
             userId = Id;
+            Console.WriteLine($"Padding: {eventSummaryReportToolStripMenuItem.Padding}");
+            Console.WriteLine($"Margin: {eventSummaryReportToolStripMenuItem.Margin}");
         }
 
 
@@ -39,11 +42,12 @@ namespace Event_management
         private void frm_Main_Load(object sender, EventArgs e)
         {
             // Apply the custom renderer to the MainMenuStrip
-            this.MainMenuStrip.Renderer = new RoundedToolStripRenderer();
+            Mainmenu.Renderer = new RoundedToolStripRenderer();
 
-            MainMenuStrip.Height = 200;
+            Mainmenu.Height = 250;
 
-            // Your existing code for login and form display
+
+            // Your existing code for login and form displa
             //if (Class1.login_flag == 2)
             //{
             //    Form3 frmeventlisting = new Form3();
@@ -69,6 +73,7 @@ namespace Event_management
             addResourceToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
             addVenueToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
             viewVenuesToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
+            eventSummaryReportToolStripMenuItem.Padding = new(5, 25, 25, 5);
 
             registerToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
             addOrganizerToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
@@ -77,6 +82,7 @@ namespace Event_management
             addResourceToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
             addVenueToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
             viewVenuesToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
+            eventSummaryReportToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
 
         }
 
@@ -153,7 +159,7 @@ namespace Event_management
             adminForm.Close();
         }
 
-       
+
 
         private void viewVenuesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -165,9 +171,9 @@ namespace Event_management
 
         }
 
-      
 
- 
+
+
 
         private void eventSummaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -177,5 +183,7 @@ namespace Event_management
             form.Show();
             adminForm.Close();
         }
+
+        
     }
 }
