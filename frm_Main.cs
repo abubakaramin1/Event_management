@@ -19,19 +19,16 @@ namespace Event_management
         adminForm1 adminForm = new adminForm1();
 
 
+
+
         public frm_Main(long Id)
         {
             InitializeComponent();
             userId = Id;
             Console.WriteLine($"Padding: {eventSummaryReportToolStripMenuItem.Padding}");
             Console.WriteLine($"Margin: {eventSummaryReportToolStripMenuItem.Margin}");
+
         }
-
-
-
-
-
-
 
         private void frm_Main_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -41,7 +38,7 @@ namespace Event_management
 
         private void frm_Main_Load(object sender, EventArgs e)
         {
-         
+
 
             // Your existing code for login and form displa
             //if (Class1.login_flag == 2)
@@ -56,11 +53,9 @@ namespace Event_management
 
             adminForm.MdiParent = this;
             adminForm.Show();
-            toolStripLabel2.Text = "Hello " + Class1.name;
+            label1.Text = "Hello";
+            label2.Text = Class1.name + "!";
             //}
-
-            toolStripLabel1.Margin = new Padding(300, 0, 20, 0);
-            toolStripLabel2.Margin = new Padding(200, 0, 0, 0);
 
             roundedButton1.Padding = new Padding(5, 25, 25, 5);
             roundedButton2.Padding = new Padding(5, 25, 25, 5);
@@ -77,7 +72,34 @@ namespace Event_management
             roundedButton5.Margin = new Padding(10, 30, 10, 0);
             roundedButton6.Margin = new Padding(10, 30, 10, 0);
             roundedButton7.Margin = new Padding(10, 30, 10, 0);
+
+            AssignButtonHoverEffects();
         }
+
+        private void AssignButtonHoverEffects()
+        {
+            foreach (var control in Controls)
+            {
+                if (control is System.Windows.Forms.Button button) // Ensure it's a button
+                {
+                    // Hover effects
+                    button.MouseEnter += (s, e) =>
+                    {
+                        button.BackColor = Color.FromArgb(150, 113, 23); // Hover: Lighter color
+                        button.FlatAppearance.BorderColor = Color.FromArgb(150, 113, 23); // Optional: Change border color
+                        button.FlatAppearance.MouseOverBackColor = Color.FromArgb(150, 113, 23); // Ensure consistent color
+                    };
+
+                    button.MouseLeave += (s, e) =>
+                    {
+                        button.BackColor = Color.FromArgb(171, 136, 109); // Reset: Original color
+                        button.FlatAppearance.BorderColor = Color.FromArgb(171, 136, 109); // Reset border color
+                        button.FlatAppearance.MouseOverBackColor = Color.FromArgb(171, 136, 109); // Reset hover back color
+                    };
+                }
+            }
+        }
+
 
 
 
@@ -155,5 +177,6 @@ namespace Event_management
             IsLogout = true;
             this.Close();
         }
+
     }
 }
