@@ -38,10 +38,7 @@ namespace Event_management
 
         private void frm_Main_Load(object sender, EventArgs e)
         {
-            // Apply the custom renderer to the MainMenuStrip
-            this.MainMenuStrip.Renderer = new RoundedToolStripRenderer();
-
-            MainMenuStrip.Height = 200;
+         
 
             // Your existing code for login and form display
             //if (Class1.login_flag == 2)
@@ -62,43 +59,27 @@ namespace Event_management
             toolStripLabel1.Margin = new Padding(300, 0, 20, 0);
             toolStripLabel2.Margin = new Padding(200, 0, 0, 0);
 
-            logOutToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
-            registerToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
-            addOrganizerToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
-            addOwnerToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
-            addResourceToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
-            addVenueToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
-            viewVenuesToolStripMenuItem.Padding = new Padding(5, 25, 25, 5);
+            roundedButton1.Padding = new Padding(5, 25, 25, 5);
+            roundedButton2.Padding = new Padding(5, 25, 25, 5);
+            roundedButton3.Padding = new Padding(5, 25, 25, 5);
+            roundedButton4.Padding = new Padding(5, 25, 25, 5);
+            roundedButton5.Padding = new Padding(5, 25, 25, 5);
+            roundedButton6.Padding = new Padding(5, 25, 25, 5);
+            roundedButton7.Padding = new Padding(5, 25, 25, 5);
 
-            registerToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
-            addOrganizerToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
-            addOwnerToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
-            logOutToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
-            addResourceToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
-            addVenueToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
-            viewVenuesToolStripMenuItem.Margin = new Padding(10, 30, 10, 0);
-
+            roundedButton1.Margin = new Padding(10, 30, 10, 0);
+            roundedButton2.Margin = new Padding(10, 30, 10, 0);
+            roundedButton3.Margin = new Padding(10, 30, 10, 0);
+            roundedButton4.Margin = new Padding(10, 30, 10, 0);
+            roundedButton5.Margin = new Padding(10, 30, 10, 0);
+            roundedButton6.Margin = new Padding(10, 30, 10, 0);
+            roundedButton7.Margin = new Padding(10, 30, 10, 0);
         }
 
 
 
-
-
-        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void roundedButton1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Logged Out succesfully");
-            IsLogout = true;
-            this.Close();
-
-
-
-        }
-
-
-
-        private void registerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
             Form adminform = new adminForm1();
             foreach (Form child in this.MdiChildren)
             {
@@ -107,13 +88,9 @@ namespace Event_management
             }
             AdminForm2 form2 = new AdminForm2(adminform, userId);
             form2.Show();
-
-
-
-
         }
 
-        private void addOrganizerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void roundedButton2_Click(object sender, EventArgs e)
         {
             Class1.add_flag = 2;
 
@@ -134,30 +111,17 @@ namespace Event_management
                 frm_registerowner frm_Registerowner = new frm_registerowner();
                 frm_Registerowner.ShowDialog();
             }
-
-
         }
 
-        private void addOwnerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void roundedButton3_Click(object sender, EventArgs e)
         {
             Class1.add_flag = 1;
             frm_registerowner frm_Registerowner = new frm_registerowner();
             frm_Registerowner.ShowDialog();
         }
 
-        private void addResourceToolStripMenuItem_Click(object sender, EventArgs e)
+        private void roundedButton4_Click(object sender, EventArgs e)
         {
-            updateResources form = new updateResources();
-            form.MdiParent = this;
-            form.Show();
-            adminForm.Close();
-        }
-
-       
-
-        private void viewVenuesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
             frm_venues venues = new frm_venues();
             venues.MdiParent = this;
             venues.Show();
@@ -165,17 +129,27 @@ namespace Event_management
 
         }
 
-      
-
- 
-
-        private void eventSummaryToolStripMenuItem_Click(object sender, EventArgs e)
+        private void roundedButton5_Click(object sender, EventArgs e)
         {
+            updateResources form = new updateResources();
+            form.MdiParent = this;
+            form.Show();
+            adminForm.Close();
+        }
 
+        private void roundedButton6_Click(object sender, EventArgs e)
+        {
             EventSummaryReportForm form = new EventSummaryReportForm();
             form.MdiParent = this;
             form.Show();
             adminForm.Close();
+        }
+
+        private void roundedButton7_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Logged Out succesfully");
+            IsLogout = true;
+            this.Close();
         }
     }
 }
