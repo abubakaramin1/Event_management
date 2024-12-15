@@ -131,6 +131,7 @@ namespace Event_management
         {
             PopulateComboBox();
             Class1.UpdateEventStatuses();
+            Class1.UpdatePaymentStatusToOverdue();
 
         }
     }

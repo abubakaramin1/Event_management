@@ -54,6 +54,7 @@
             button4 = new RoundedButton();
             label9 = new Label();
             textBox4 = new TextBox();
+            btnCheckout = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -365,12 +366,23 @@
             textBox4.Size = new Size(186, 23);
             textBox4.TabIndex = 27;
             // 
+            // btnCheckout
+            // 
+            btnCheckout.Location = new Point(572, 39);
+            btnCheckout.Name = "btnCheckout";
+            btnCheckout.Size = new Size(75, 23);
+            btnCheckout.TabIndex = 28;
+            btnCheckout.Text = "Checkout";
+            btnCheckout.UseVisualStyleBackColor = true;
+            btnCheckout.Click += btnCheckout_Click;
+            // 
             // Form5
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(228, 224, 225);
             ClientSize = new Size(1204, 659);
+            Controls.Add(btnCheckout);
             Controls.Add(textBox4);
             Controls.Add(label9);
             Controls.Add(button4);
@@ -436,5 +448,6 @@
         private RoundedButton button4;
         private Label label9;
         private TextBox textBox4;
+        private Button btnCheckout;
     }
 }

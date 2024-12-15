@@ -137,6 +137,7 @@
             Name = "AddResources";
             Text = "AddResources";
             FormClosed += AddResources_FormClosed;
+            Load += AddResources_Load;
             ResumeLayout(false);
             PerformLayout();
         }

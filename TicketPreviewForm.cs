@@ -156,5 +156,10 @@ namespace Event_management
             // Close the preview form
             this.Close();
         }
+
+        private void TicketPreviewForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

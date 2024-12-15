@@ -178,5 +178,12 @@ namespace Event_management
             this.Close();
         }
 
+        private void roundedButton8_Click(object sender, EventArgs e)
+        {
+            YearlyReport report = new YearlyReport();
+            report.MdiParent = this;
+            report.Show();
+            adminForm.Close();
+        }
     }
 }

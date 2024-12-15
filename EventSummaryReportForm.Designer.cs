@@ -38,6 +38,7 @@
             lblTotalEvents = new Label();
             lblTotalActualCost = new Label();
             lblTotalProfitAmount = new Label();
+            statusComboBox = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -46,7 +47,7 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(0, 93);
+            dataGridView1.Location = new Point(59, 93);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.Size = new Size(800, 357);
@@ -54,14 +55,14 @@
             // 
             // dateTimePickerStartDate
             // 
-            dateTimePickerStartDate.Location = new Point(38, 24);
+            dateTimePickerStartDate.Location = new Point(12, 21);
             dateTimePickerStartDate.Name = "dateTimePickerStartDate";
             dateTimePickerStartDate.Size = new Size(200, 23);
             dateTimePickerStartDate.TabIndex = 1;
             // 
             // dateTimePickerEndDate
             // 
-            dateTimePickerEndDate.Location = new Point(253, 23);
+            dateTimePickerEndDate.Location = new Point(239, 21);
             dateTimePickerEndDate.Name = "dateTimePickerEndDate";
             dateTimePickerEndDate.Size = new Size(200, 23);
             dateTimePickerEndDate.TabIndex = 2;
@@ -69,7 +70,7 @@
             // comboBoxOrganizers
             // 
             comboBoxOrganizers.FormattingEnabled = true;
-            comboBoxOrganizers.Location = new Point(473, 23);
+            comboBoxOrganizers.Location = new Point(460, 21);
             comboBoxOrganizers.Name = "comboBoxOrganizers";
             comboBoxOrganizers.Size = new Size(121, 23);
             comboBoxOrganizers.TabIndex = 3;
@@ -87,7 +88,7 @@
             // comboBoxVenues
             // 
             comboBoxVenues.FormattingEnabled = true;
-            comboBoxVenues.Location = new Point(612, 24);
+            comboBoxVenues.Location = new Point(600, 21);
             comboBoxVenues.Name = "comboBoxVenues";
             comboBoxVenues.Size = new Size(121, 23);
             comboBoxVenues.TabIndex = 5;
@@ -95,7 +96,7 @@
             // comboBoxOwners
             // 
             comboBoxOwners.FormattingEnabled = true;
-            comboBoxOwners.Location = new Point(753, 23);
+            comboBoxOwners.Location = new Point(738, 21);
             comboBoxOwners.Name = "comboBoxOwners";
             comboBoxOwners.Size = new Size(121, 23);
             comboBoxOwners.TabIndex = 6;
@@ -127,11 +128,21 @@
             lblTotalProfitAmount.TabIndex = 9;
             lblTotalProfitAmount.Text = "label1";
             // 
+            // statusComboBox
+            // 
+            statusComboBox.FormattingEnabled = true;
+            statusComboBox.Items.AddRange(new object[] { "All", "Upcoming", "Ongoing", "Completed" });
+            statusComboBox.Location = new Point(875, 21);
+            statusComboBox.Name = "statusComboBox";
+            statusComboBox.Size = new Size(121, 23);
+            statusComboBox.TabIndex = 10;
+            // 
             // EventSummaryReportForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(932, 532);
+            ClientSize = new Size(979, 532);
+            Controls.Add(statusComboBox);
             Controls.Add(lblTotalProfitAmount);
             Controls.Add(lblTotalActualCost);
             Controls.Add(lblTotalEvents);
@@ -144,6 +155,7 @@
             Controls.Add(dataGridView1);
             Name = "EventSummaryReportForm";
             Text = "EventSummaryReportForm";
+            WindowState = FormWindowState.Maximized;
             FormClosed += EventSummaryReportForm_FormClosed;
             Load += EventSummaryReportForm_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -163,5 +175,6 @@
         private Label lblTotalEvents;
         private Label lblTotalActualCost;
         private Label lblTotalProfitAmount;
+        private ComboBox statusComboBox;
     }
 }

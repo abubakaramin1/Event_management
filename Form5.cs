@@ -18,6 +18,7 @@ namespace Event_management
 
     public partial class Form5 : Form
     {
+        private decimal Totalcost;
         private long eventId;
         string originalprofit;
         string originalvenue;
@@ -32,16 +33,63 @@ namespace Event_management
             // Store the reference to the existing AdminForm1
             this.Shown += Form5_Shown;
             this.FormClosed += Form5_FormClosed;
+
         }
 
-        public Form5(long eventId, Form listingForm)
+        
+        private void UpdateCheckoutButtonState()
         {
-            InitializeComponent();
-            this.eventId = eventId;
-            // Store the reference to the existing AdminForm1
-            this.Shown += Form5_Shown;
-            this.FormClosed += Form5_FormClosed;
+            try
+            {
 
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT Status FROM Events WHERE EventID = @EventID";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@EventID", eventId);
+
+                        var status = command.ExecuteScalar()?.ToString();
+
+                        if (status == "Completed")
+                        {
+                            btnCheckout.Enabled = true;
+                        }
+                        else if (status == "Upcoming" || status == "Ongoing")
+                        {
+                            btnCheckout.Enabled = false;
+                        }
+
+
+                    }
+                }
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT PaymentStatus FROM Events WHERE EventID = @EventID";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@EventID", eventId);
+
+                        var paystatus = command.ExecuteScalar()?.ToString();
+
+                        if (paystatus == "Received")
+                        {
+                            btnCheckout.Enabled = false;
+                        }
+                        
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while checking event status: {ex.Message}");
+            }
         }
 
 
@@ -103,6 +151,7 @@ namespace Event_management
                 if (!Convert.IsDBNull(result))
                 {
                     textBox3.Text = result.ToString();
+                    Totalcost = Convert.ToDecimal(result);
                 }
                 else
                 {
@@ -131,187 +180,53 @@ namespace Event_management
 
         }
 
-        
+
 
         public void LoadEventDetails()
         {
             try
             {
-                string attendeeQuery = "SELECT * FROM UserLoginInfo WHERE Id IN ( " +
-                                       "SELECT AttendeeID FROM Event_Attendees WHERE EventID = @EventID)";
-                string estimatedQuery = "SELECT Budget FROM Events WHERE EventID = @EventID";
-                string actualQuery = "SELECT ActualCost FROM Events WHERE EventID = @EventID";
-                string organizerQuery = "SELECT FullName FROM UserLoginInfo WHERE Id IN ( SELECT OrganizerID FROM Events WHERE EventID = @EventID)";
-                string dateQuery = "SELECT EventDate FROM Events WHERE EventID = @EventID";
-                string venueQuery = "SELECT VenueName FROM Venues WHERE VenueID = (SELECT VenueID FROM Events WHERE EventID = @EventID)";
-                string profitQuery = "SELECT ProfitPercentage FROM Events WHERE EventID = @EventID";
-                string profitamountQuery = "SELECT ProfitAmount FROM Events WHERE EventID = @EventID";
-
-                string query = "\t\t \r\nSELECT r.ResourceName, r.Quantity, r.Cost, er.QuantityUsed\r\nFROM Resources r\r\nINNER JOIN Event_Resources er \r\n    ON r.ResourceID = er.ResourceID\r\nINNER JOIN Events e \r\n    ON er.EventID = e.EventID\r\nWHERE e.EventID = @EventID;";
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
 
-                    SqlCommand cmd = new SqlCommand(query, connection);
+                    SqlCommand cmd = new SqlCommand("GetAllEventDetails", connection);
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@EventID", eventId);
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    DataTable eventDetailsTable = new DataTable();
-                    adapter.Fill(eventDetailsTable);
 
-                    dataGridView1.DataSource = eventDetailsTable;
-
+                    SqlDataAdapter adapter = new SqlDataAdapter();
+                    adapter.SelectCommand = cmd;
+                    DataSet ds = new DataSet();
+                    adapter.Fill(ds);
+                    dataGridView1.DataSource = ds.Tables[0];
                     HighlightExceededQuantities();
-                }
 
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
+                    textBox1.Text = ds.Tables[1].Rows[0][0].ToString();
+                    comboBoxOrganizer.Text = ds.Tables[1].Rows[0][0].ToString();
 
-                    // Organizer Query
-                    SqlCommand cmd = new SqlCommand(organizerQuery, connection);
-                    cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();
 
-                    if (result != null)
-                    {
-                        textBox1.Text = result.ToString();
-                        comboBoxOrganizer.Text = result.ToString();
-                    }
-                    else
-                    {
-                        textBox1.Text = "Organizer: Not Available";
-                    }
-                }
+                    dataGridView2.DataSource = ds.Tables[2];
 
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
+                    textBox2.Text = ds.Tables[3].Rows[0][0].ToString();
 
-                    // Attendee Query
-                    SqlCommand cmd = new SqlCommand(attendeeQuery, connection);
-                    cmd.Parameters.AddWithValue("@EventID", eventId);
+                    textBox3.Text = ds.Tables[4].Rows[0][0].ToString();
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    DataTable eventDetailsTable = new DataTable();
-                    adapter.Fill(eventDetailsTable);
+                    Totalcost = Convert.ToDecimal(ds.Tables[4].Rows[0][0]) ;
 
-                    dataGridView2.DataSource = eventDetailsTable;
-                }
 
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
+                    textBox5.Text = Convert.ToDateTime(ds.Tables[5].Rows[0][0]).ToString("dd-MM-yyyy");
 
-                    // Venue Query
-                    SqlCommand cmd = new SqlCommand(venueQuery, connection);
-                    cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();
+                    originalvenue = comboBoxVenue.Text = ds.Tables[6].Rows[0][0].ToString();
 
-                    if (result != null)
-                    {
-                        originalvenue = comboBoxVenue.Text = result.ToString();
-                    }
-                    else
-                    {
-                        comboBoxVenue.Text = "Venue: Not Available";
-                    }
-                }
+                    originalprofit = ds.Tables[7].Rows[0][0].ToString();
+                    textBoxProfit.Text = ds.Tables[7].Rows[0][0].ToString() + " %";
 
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
+                    textBox4.Text = ds.Tables[8].Rows[0][0].ToString();
 
-                    // Estimated Budget Query
-                    SqlCommand cmd = new SqlCommand(estimatedQuery, connection);
-                    cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();
 
-                    if (result != null)
-                    {
-                        textBox2.Text = result.ToString();
-                    }
-                    else
-                    {
-                        textBox2.Text = "Budget: Not Available";
-                    }
-                }
 
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
 
-                    // Actual Cost Query
-                    SqlCommand cmd = new SqlCommand(actualQuery, connection);
-                    cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();
-
-                    if (!Convert.IsDBNull(result))
-                    {
-                        textBox3.Text = result.ToString();
-                    }
-                    else
-                    {
-                        textBox3.Text = "Cost: Not Available";
-                    }
-                }
-
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
-
-                    // Date Query
-                    SqlCommand cmd = new SqlCommand(dateQuery, connection);
-                    cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();
-
-                    if (result != null)
-                    {
-                        DateTime eventDate = Convert.ToDateTime(result);
-                        textBox5.Text = eventDate.ToString("dd-MM-yyyy");
-                    }
-                    else
-                    {
-                        textBox5.Text = "Date: Not Available";
-                    }
-                }
-
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
-
-                    // Profit Query
-                    SqlCommand cmd = new SqlCommand(profitQuery, connection);
-                    cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();
-
-                    if (result != null)
-                    {
-                        originalprofit = result.ToString();
-                        textBoxProfit.Text = result.ToString() + " %";
-                    }
-                    else
-                    {
-                        textBoxProfit.Text = "Profit: Not Available";
-                    }
-                }
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
-
-                    // Profit Query
-                    SqlCommand cmd = new SqlCommand(profitamountQuery, connection);
-                    cmd.Parameters.AddWithValue("@EventID", eventId);
-                    var result = cmd.ExecuteScalar();
-
-                    if (result != null)
-                    {
-                        textBox4.Text = result.ToString();
-                    }
-                    else
-                    {
-                        textBox4.Text = "Profit amount: Not Available";
-                    }
                 }
             }
             catch (Exception ex)
@@ -366,6 +281,9 @@ namespace Event_management
         {
             ApplyDataGridViewStyles(dataGridView1);
             ApplyDataGridViewStyles(dataGridView2);
+            UpdateCheckoutButtonState();
+
+
         }
 
 
@@ -373,7 +291,6 @@ namespace Event_management
         {
 
 
-            Class1.CalculateEventCost(eventId);
 
             LoadEventDetails();
             if (Class1.login_flag == 1)
@@ -642,7 +559,6 @@ namespace Event_management
                 {
                     profitText = textBoxProfit.Text.Trim();
 
-                    // Remove the '%' sign if it exists
                     if (profitText.EndsWith("%"))
                     {
                         profitText = profitText.TrimEnd('%');
@@ -837,11 +753,141 @@ namespace Event_management
 
         private void button4_Click(object sender, EventArgs e)
         {
-            SubtractResources form = new SubtractResources(this,eventId);
+            SubtractResources form = new SubtractResources(this, eventId);
             form.ShowDialog();
 
         }
 
+
+
+
+
+
+
+        private void changepaymentstatus()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand("ApplyOverduePenalty", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@EventID", eventId);
+
+                        SqlParameter penaltyAppliedParam = new SqlParameter("@PenaltyApplied", SqlDbType.Bit)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(penaltyAppliedParam);
+
+                        SqlParameter updatedTotalCostParam = new SqlParameter("@UpdatedTotalCost", SqlDbType.Decimal)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(updatedTotalCostParam);
+
+                        command.ExecuteNonQuery();
+
+                        bool penaltyApplied = Convert.ToBoolean(penaltyAppliedParam.Value);
+
+                        decimal? updatedTotalCost = updatedTotalCostParam.Value != DBNull.Value
+                            ? (decimal?)updatedTotalCostParam.Value
+                            : null;
+
+                        if (penaltyApplied)
+                        {
+                            MessageBox.Show($"Payment was overdue. A penalty of 5% has been added. Updated total cost: {updatedTotalCost:C}");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Checkout successful. Payment status is now 'Received'. Total cost: {updatedTotalCost:C}");
+                        }
+
+
+                        reloadcost();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred during checkout: {ex.Message}");
+            }
+
+
+
+
+
+
+        }
+
+        private void btnCheckout_Click(object sender, EventArgs e)
+        {
+            String status = null;
+            string query = "SELECT PaymentStatus FROM Events WHERE EventID = @EventID;";
+            using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@EventID", eventId);
+
+                var result = cmd.ExecuteScalar();
+                if (!Convert.IsDBNull(result))
+                {
+                    status = result.ToString();
+
+                }
+                else
+                {
+
+                }
+
+
+
+            }
+            if (status == "Pending")
+            {
+                DialogResult result = MessageBox.Show(
+                           $"The total cost for this event is {Totalcost:C}. Confirm payment?",
+                           "Confirm Payment",
+                           MessageBoxButtons.YesNo,
+                           MessageBoxIcon.Question
+                       );
+
+                if (result == DialogResult.Yes)
+                {
+                    changepaymentstatus();
+                    UpdateCheckoutButtonState();
+                }
+            }
+
+            if (status == "Overdue")
+            {
+                decimal updatedcost;
+                updatedcost = Totalcost + (Totalcost * Convert.ToDecimal(0.05));
+                DialogResult result = MessageBox.Show(
+                          $"Payment was overdue , 5 % penalty added . The total cost for this event is {updatedcost:C}. Confirm payment?",
+                          "Confirm Payment",
+                          MessageBoxButtons.YesNo,
+                          MessageBoxIcon.Question
+                      );
+
+                if (result == DialogResult.Yes)
+                {
+                    changepaymentstatus();
+                    UpdateCheckoutButtonState();
+
+                }
+
+            }
+        }
+
+       
     }
 }
 

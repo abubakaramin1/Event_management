@@ -85,71 +85,48 @@ namespace Event_management
             return null;
         }
 
-
-        private void resourcesForm_Load(object sender, EventArgs e)
+        private void GetResourceDetails()
         {
             try
             {
-                string nameQuery = "SELECT r.ResourceName FROM Resources r where ResourceID = @resourceid";
-                string costQuery = "SELECT r.Cost FROM Resources r where ResourceID = @resourceid";
-                string QuantityQuery = "SELECT r.Quantity FROM Resources r where ResourceID = @resourceid";
-
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
-                    SqlCommand cmd = new SqlCommand(nameQuery, connection);
-                    cmd.Parameters.AddWithValue("@resourceid", resourceid);
-                    var result = cmd.ExecuteScalar();
 
-                    if (result != null)
+                    using (SqlCommand cmd = new SqlCommand("GetResourceDetails", connection))
                     {
-                        textBox1.Text = result.ToString();
-                    }
-                    else
-                    {
-                        textBox1.Text = "Resource: Not Available";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@ResourceID", resourceid);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                textBox1.Text = reader["ResourceName"].ToString();
+                                textBox2.Text = reader["Cost"].ToString();
+                                textBox3.Text = reader["Quantity"].ToString();
+                            }
+                            else
+                            {
+                                textBox1.Text = "Resource: Not Available";
+                                textBox2.Text = "Cost: Not Available";
+                                textBox3.Text = "Quantity: Not Available";
+                            }
+                        }
                     }
                 }
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
-                    SqlCommand cmd = new SqlCommand(costQuery, connection);
-                    cmd.Parameters.AddWithValue("@resourceid", resourceid);
-                    var result = cmd.ExecuteScalar();
-
-                    if (result != null)
-                    {
-                        textBox2.Text = result.ToString();
-                    }
-                    else
-                    {
-                        textBox2.Text = "Cost: Not Available";
-                    }
-                }
-                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
-                {
-                    connection.Open();
-                    SqlCommand cmd = new SqlCommand(QuantityQuery, connection);
-                    cmd.Parameters.AddWithValue("@resourceid", resourceid);
-                    var result = cmd.ExecuteScalar();
-
-                    if (result != null)
-                    {
-                        textBox3.Text = result.ToString();
-                    }
-                    else
-                    {
-                        textBox3.Text = "Quantity: Not Available";
-                    }
-                }
-
             }
-
-
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading event details: {ex.Message}");
             }
+        }
+
+
+        private void resourcesForm_Load(object sender, EventArgs e)
+        {
+            
+            GetResourceDetails();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -173,10 +150,9 @@ namespace Event_management
                     {
                         MessageBox.Show("Resource updated successfully!");
 
-                        // Trigger the ResourceUpdated event to notify updateResources
                         ResourceUpdated?.Invoke();
 
-                        this.Close(); // Close the current form after updating
+                        this.Close(); 
                     }
                     else
                     {
@@ -192,13 +168,11 @@ namespace Event_management
 
         private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Allow only numbers, one decimal point, and backspace
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
             {
                 e.Handled = true;
             }
 
-            // Allow only one decimal point
             if (e.KeyChar == '.' && (sender as System.Windows.Forms.TextBox).Text.Contains("."))
             {
                 e.Handled = true;
@@ -207,21 +181,18 @@ namespace Event_management
 
         private void button3_Click(object sender, EventArgs e)
         {
-            // Show input box to get the new cost from the user
             string input = ShowInputBox("Enter the new cost:", "Update Cost");
 
             if (!string.IsNullOrEmpty(input) && decimal.TryParse(input, out decimal newCost))
             {
                 try
                 {
-                    // Query to update the cost in the database
                     string updateCostQuery = "UPDATE Resources SET Cost = @newCost WHERE ResourceID = @resourceid";
 
                     using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                     {
                         connection.Open();
 
-                        // Update the cost in the database
                         SqlCommand updateCmd = new SqlCommand(updateCostQuery, connection);
                         updateCmd.Parameters.AddWithValue("@newCost", newCost);
                         updateCmd.Parameters.AddWithValue("@resourceid", resourceid);

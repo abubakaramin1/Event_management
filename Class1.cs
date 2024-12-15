@@ -118,7 +118,6 @@ namespace Event_management
                     }
                 }
 
-                // Calculate the resource costs for the event
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
                     connection.Open();
@@ -161,7 +160,20 @@ namespace Event_management
                 decimal profit = totalEventCost * profitPercentage;
                 decimal finalCost = totalEventCost + profit;
 
-                finalCost = Math.Round(finalCost, 2);
+
+                using (SqlConnection connection = new SqlConnection(Class1.connectionString))
+                {
+                    connection.Open();
+                    string Query = "UPDATE Events SET ExpenseAmount = @expense WHERE EventID = @EventID";
+                    SqlCommand cmd = new SqlCommand(Query, connection);
+                    cmd.Parameters.AddWithValue("@expense", totalEventCost);
+                    cmd.Parameters.AddWithValue("@EventID", eventId);
+                    cmd.ExecuteNonQuery();
+
+                }
+
+
+                    finalCost = Math.Round(finalCost, 2);
 
                 using (SqlConnection connection = new SqlConnection(Class1.connectionString))
                 {
@@ -213,6 +225,29 @@ namespace Event_management
                 MessageBox.Show($"An error occurred while updating event statuses: {ex.Message}");
             }
         }
+
+        public static void UpdatePaymentStatusToOverdue()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString)) // Replace 'connectionString' with your actual connection string
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand("UpdatePaymentStatusToOverdue", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.ExecuteNonQuery(); // Execute the stored procedure
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while updating payment statuses: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
 
 

@@ -63,6 +63,7 @@
             Controls.Add(flowLayoutPanelThumbnails);
             Name = "TicketPreviewForm";
             Text = "TicketPreviewForm";
+            Load += TicketPreviewForm_Load;
             ResumeLayout(false);
         }
 

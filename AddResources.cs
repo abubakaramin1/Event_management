@@ -148,6 +148,11 @@ namespace Event_management
         {
 
         }
+
+        private void AddResources_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 
 

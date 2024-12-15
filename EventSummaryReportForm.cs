@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace Event_management
 {
@@ -20,17 +21,19 @@ namespace Event_management
         long? organizerId = null;
         int? venueId = null;
         long? ownerId = null;
+        string? status = null;
 
 
         public EventSummaryReportForm()
         {
             InitializeComponent();
-            LoadEventSummaryReport(startDate, endDate, organizerId, venueId, ownerId);
-            LoadEventSummaryAggregates(startDate, endDate, organizerId, venueId, ownerId);
+            LoadEventSummaryReport(startDate, endDate, organizerId, venueId, ownerId,status);
+            LoadEventSummaryAggregates(startDate, endDate, organizerId, venueId, ownerId, status);
             InitializeDataGridView();
             LoadOrganizers();
             LoadVenues();
             LoadOwners();
+            statusComboBox.SelectedIndex = 0;
         }
 
         private void InitializeDataGridView()
@@ -50,7 +53,7 @@ namespace Event_management
             dateTimePickerEndDate.ShowCheckBox = true;
             dateTimePickerEndDate.Checked = false;
         }
-        private void LoadEventSummaryAggregates(DateTime? startDate, DateTime? endDate, long? organizerId, int? venueId, long? ownerId)
+        private void LoadEventSummaryAggregates(DateTime? startDate, DateTime? endDate, long? organizerId, int? venueId, long? ownerId, string? status)
         {
             try
             {
@@ -68,6 +71,8 @@ namespace Event_management
                         command.Parameters.AddWithValue("@OrganizerID", organizerId ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@VenueID", venueId ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@OwnerID", ownerId ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@Status", status ?? (object)DBNull.Value);
+
 
                         // Add output parameters
                         SqlParameter totalEventsParam = new SqlParameter("@TotalEvents", SqlDbType.BigInt)
@@ -99,7 +104,8 @@ namespace Event_management
                         // Update the labels or UI elements
                         lblTotalEvents.Text = $"Total Events: {totalEvents}";
                         lblTotalActualCost.Text = $"Total Actual Cost: {totalActualCost:C}";
-                        lblTotalProfitAmount.Text = $"Total Profit Amount: {totalProfitAmount:C}";                     }
+                        lblTotalProfitAmount.Text = $"Total Profit Amount: {totalProfitAmount:C}";
+                    }
                 }
             }
             catch (Exception ex)
@@ -110,7 +116,7 @@ namespace Event_management
 
 
 
-        private void LoadEventSummaryReport(DateTime? startDate, DateTime? endDate, long? organizerId, int? venueId, long? ownerId)
+        private void LoadEventSummaryReport(DateTime? startDate, DateTime? endDate, long? organizerId, int? venueId, long? ownerId, string? status)
         {
             try
             {
@@ -128,13 +134,12 @@ namespace Event_management
                         command.Parameters.AddWithValue("@OrganizerID", organizerId ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@VenueID", venueId ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@OwnerID", ownerId ?? (object)DBNull.Value);
-
+                        command.Parameters.AddWithValue("@Status", status ?? (object)DBNull.Value);
 
                         SqlDataAdapter adapter = new SqlDataAdapter(command);
                         DataTable reportTable = new DataTable();
                         adapter.Fill(reportTable);
 
-                        // Bind the data to the DataGridView
                         dataGridView1.DataSource = reportTable;
                     }
                 }
@@ -144,6 +149,7 @@ namespace Event_management
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
+
 
 
         private void LoadOrganizers()
@@ -162,7 +168,7 @@ namespace Event_management
 
                         DataRow defaultRow = organizerTable.NewRow();
                         defaultRow["Id"] = DBNull.Value; // Null value to represent no selection
-                        defaultRow["FullName"] = "None";
+                        defaultRow["FullName"] = "All";
                         organizerTable.Rows.InsertAt(defaultRow, 0);
 
                         comboBoxOrganizers.DataSource = organizerTable;
@@ -192,11 +198,16 @@ namespace Event_management
 
             ownerId = comboBoxOwners.SelectedValue != DBNull.Value
                              ? (long?)comboBoxOwners.SelectedValue
-                             : null;
+            : null;
 
-            LoadEventSummaryReport(startDate, endDate, organizerId, venueId, ownerId);
+            status = statusComboBox.SelectedItem?.ToString();
+            status = status == "All" ? null : status;
 
-            LoadEventSummaryAggregates(startDate, endDate, organizerId, venueId, ownerId);
+
+
+            LoadEventSummaryReport(startDate, endDate, organizerId, venueId, ownerId,status);
+
+            LoadEventSummaryAggregates(startDate, endDate, organizerId, venueId, ownerId, status);
 
 
         }
@@ -217,7 +228,7 @@ namespace Event_management
 
                         DataRow defaultRow = venueTable.NewRow();
                         defaultRow["VenueID"] = DBNull.Value; // Null value to represent no selection
-                        defaultRow["VenueName"] = "None";
+                        defaultRow["VenueName"] = "All";
                         venueTable.Rows.InsertAt(defaultRow, 0);
 
                         comboBoxVenues.DataSource = venueTable;
@@ -249,7 +260,7 @@ namespace Event_management
 
                         DataRow defaultRow = ownerTable.NewRow();
                         defaultRow["Id"] = DBNull.Value; // Null value to represent no selection
-                        defaultRow["FullName"] = "None";
+                        defaultRow["FullName"] = "All";
                         ownerTable.Rows.InsertAt(defaultRow, 0);
 
                         comboBoxOwners.DataSource = ownerTable;
@@ -272,6 +283,6 @@ namespace Event_management
             admin.Show();
         }
 
-        
+     
     }
 }

@@ -26,32 +26,22 @@ namespace Event_management
         private void Frm_ResourcesAdd_Load(object sender, EventArgs e)
         {
 
-            string query = "SELECT EventDate FROM Events WHERE EventID = @EventID";
-
-
-            string queryUseDate = @"
-                   select r.ResourceID , r.ResourceName ,r.Quantity ,  r.Quantity - ISNULL((SELECT SUM(er.QuantityUsed) as Quantity
-         FROM Event_Resources er
-         INNER JOIN Events e ON er.EventID = e.EventID
-         where e.EventDate = @EventDate AND r.ResourceID = er.ResourceID),0) as Available from Resources r ";
-            DateTime eventDate;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@EventID", eventId);
-                try
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    object result = command.ExecuteScalar();
-                    if (result != null && result != DBNull.Value)
-                    {
-                        eventDate = Convert.ToDateTime(result);
-                        SqlCommand commandUseDate = new SqlCommand(queryUseDate, connection);
-                        commandUseDate.Parameters.AddWithValue("@EventDate", eventDate);
 
-                        SqlDataAdapter adapter = new SqlDataAdapter(commandUseDate);
+                    using (SqlCommand cmd = new SqlCommand("GetResourceAvailabilityByEvent", connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@EventID", eventId);
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
+
+
                         dataTable.Columns.Add("AvailabilityStatus", typeof(string));
 
                         foreach (DataRow row in dataTable.Rows)
@@ -77,11 +67,12 @@ namespace Event_management
 
 
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("An error occurred: " + ex.Message);
-                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+        
         }
 
         private void button1_Click(object sender, EventArgs e)
